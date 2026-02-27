@@ -1,12 +1,5 @@
----
 deployment:
   tasks:
-    - export DEPLOYPATH=/home1/harmakko/public_html/
-    - /bin/cp -r . $DEPLOYPATH
-    - rm -rf $DEPLOYPATH/.git
-    - rm -rf $DEPLOYPATH/.github
-    - rm -f $DEPLOYPATH/.cpanel.yml
-    - rm -f $DEPLOYPATH/README.md
-    - find $DEPLOYPATH/api -name "*.php" -exec chmod 644 {} \;
-    - chmod 644 $DEPLOYPATH/.htaccess
-    - echo "✅ HarmaalWale deployed at $(date)"
+    - export DEPLOYPATH=/home/harmaalwale/public_html/
+    - /bin/rm -rf $DEPLOYPATH/*
+    - /bin/cp -R * $DEPLOYPATH
