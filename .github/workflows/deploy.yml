@@ -1,4 +1,4 @@
-name: Deploy to cPanel via Git
+name: 🚀 Auto Deploy to cPanel
 
 on:
   push:
@@ -7,23 +7,37 @@ on:
 
 jobs:
   deploy:
-    name: Trigger cPanel Pull
+    name: Push → cPanel → Live
     runs-on: ubuntu-latest
 
     steps:
-      - name: Trigger cPanel Git Deploy
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔄 Pull latest code on cPanel
         run: |
-          RESPONSE=$(curl -s -o /tmp/cpanel_response.txt -w "%{http_code}" \
+          echo "Step 1: Triggering cPanel git pull..."
+          PULL=$(curl -s -w "\n%{http_code}" \
             -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
             "https://harmaalwale.com:2083/execute/VersionControl/update?repository_root=/home1/harmakko/repositories/harmaalwale.com")
-          
-          echo "HTTP Status: $RESPONSE"
-          echo "Response body:"
-          cat /tmp/cpanel_response.txt
-          
-          if [ "$RESPONSE" = "200" ]; then
-            echo "✅ Deploy triggered successfully!"
-          else
-            echo "❌ Deploy failed with status $RESPONSE"
-            exit 1
-          fi
+          PULL_STATUS=$(echo "$PULL" | tail -1)
+          PULL_BODY=$(echo "$PULL" | head -1)
+          echo "Pull HTTP Status: $PULL_STATUS"
+          echo "Pull Response: $PULL_BODY"
+
+      - name: 🚀 Run cPanel deployment (.cpanel.yml)
+        run: |
+          echo "Step 2: Triggering cPanel deploy tasks..."
+          DEPLOY=$(curl -s -w "\n%{http_code}" \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
+            "https://harmaalwale.com:2083/execute/VersionControlDeployment/create?repository_root=/home1/harmakko/repositories/harmaalwale.com")
+          DEPLOY_STATUS=$(echo "$DEPLOY" | tail -1)
+          DEPLOY_BODY=$(echo "$DEPLOY" | head -1)
+          echo "Deploy HTTP Status: $DEPLOY_STATUS"
+          echo "Deploy Response: $DEPLOY_BODY"
+
+      - name: ✅ Done
+        run: |
+          echo "=========================================="
+          echo " harmaalwale.com should be live now!"
+          echo "=========================================="
