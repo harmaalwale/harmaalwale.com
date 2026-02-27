@@ -1,0 +1,24 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "``` git push → GitHub → Webhook → cPanel Git Pull → .cpanel.yml → public_html updated ```",
+  "main": "auth_widget.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harmaalwale/harmaalwale.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/harmaalwale/harmaalwale.com/issues"
+  },
+  "homepage": "https://github.com/harmaalwale/harmaalwale.com#readme",
+  "dependencies": {
+    "chokidar": "^5.0.0"
+  }
+}
