@@ -11,15 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Ping cPanel Git Webhook
+      - name: Trigger cPanel Git Deploy
         run: |
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
-            -X POST "${{ secrets.CPANEL_WEBHOOK_URL }}" \
-            -H "Content-Type: application/json" \
-            --max-time 30)
-          echo "cPanel webhook response: $RESPONSE"
-          if [ "$RESPONSE" -ge 200 ] && [ "$RESPONSE" -lt 400 ]; then
-            echo "✅ cPanel pull triggered successfully"
+          RESPONSE=$(curl -s -o /tmp/cpanel_response.txt -w "%{http_code}" \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
+            "https://harmaalwale.com:2083/execute/VersionControl/update?repository_root=/home1/harmakko/repositories/harmaalwale.com")
+          
+          echo "HTTP Status: $RESPONSE"
+          echo "Response body:"
+          cat /tmp/cpanel_response.txt
+          
+          if [ "$RESPONSE" = "200" ]; then
+            echo "✅ Deploy triggered successfully!"
           else
-            echo "⚠️  Unexpected response: $RESPONSE (deploy may still succeed)"
+            echo "❌ Deploy failed with status $RESPONSE"
+            exit 1
           fi
