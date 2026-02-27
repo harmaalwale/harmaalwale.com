@@ -1,0 +1,65 @@
+[25-Aug-2025 12:13:11 UTC] PHP Fatal error:  Uncaught Error: Non-static method NewfoldLabs\WP\Module\Data\Helpers\Plugin::collect() cannot be called statically in /home1/harmakko/public_html/WP/wp-content/plugins/mojo-marketplace-wp-plugin/vendor/newfold-labs/wp-module-data/includes/Listeners/Plugin.php:139
+Stack trace:
+#0 /home1/harmakko/public_html/WP/wp-content/plugins/mojo-marketplace-wp-plugin/vendor/newfold-labs/wp-module-data/includes/Listeners/Plugin.php(121): NewfoldLabs\WP\Module\Data\Listeners\Plugin->updated(Array)
+#1 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(324): NewfoldLabs\WP\Module\Data\Listeners\Plugin->installed_or_updated(Object(Plugin_Upgrader), Array)
+#2 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters(NULL, Array)
+#3 /home1/harmakko/public_html/WP/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#4 /home1/harmakko/public_html/WP/wp-admin/includes/class-plugin-upgrader.php(412): do_action('upgrader_proces...', Object(Plugin_Upgrader), Array)
+#5 /home1/harmakko/public_html/WP/wp-admin/includes/ajax-actions.php(4650): Plugin_Upgrader->bulk_upgrade(Array)
+#6 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(324): wp_ajax_update_plugin('')
+#7 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#8 /home1/harmakko/public_html/WP/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#9 /home1/harmakko/public_html/WP/wp-admin/admin-ajax.php(192): do_action('wp_ajax_update-...')
+#10 {main}
+  thrown in /home1/harmakko/public_html/WP/wp-content/plugins/mojo-marketplace-wp-plugin/vendor/newfold-labs/wp-module-data/includes/Listeners/Plugin.php on line 139
+[25-Aug-2025 12:13:31 UTC] PHP Warning:  Undefined variable $page in /home1/harmakko/public_html/WP/wp-content/plugins/mojo-marketplace-wp-plugin/vendor/newfold-labs/wp-module-marketplace/includes/Themes.php on line 177
+[25-Aug-2025 12:50:00 UTC] PHP Warning:  Undefined variable $page in /home1/harmakko/public_html/WP/wp-content/plugins/mojo-marketplace-wp-plugin/vendor/newfold-labs/wp-module-marketplace/includes/Themes.php on line 177
+[25-Aug-2025 12:53:30 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 12:53:30 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 12:53:30 UTC] WordPress database error Table 'harmakko_wp154.wpjw_cookieadmin_consents' doesn't exist for query SHOW FULL COLUMNS FROM `wpjw_cookieadmin_consents` made by do_action('wp_ajax_cookieadmin_pro_ajax_handler'), WP_Hook->do_action, WP_Hook->apply_filters, cookieadmin_pro_ajax_handler, CookieAdminPro\Enduser::save_consent
+[25-Aug-2025 16:51:22 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 16:51:22 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 16:51:22 UTC] WordPress database error Table 'harmakko_wp154.wpjw_cookieadmin_consents' doesn't exist for query SHOW FULL COLUMNS FROM `wpjw_cookieadmin_consents` made by do_action('wp_ajax_nopriv_cookieadmin_pro_ajax_handler'), WP_Hook->do_action, WP_Hook->apply_filters, cookieadmin_pro_ajax_handler, CookieAdminPro\Enduser::save_consent
+[25-Aug-2025 16:57:33 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 16:57:33 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 16:57:33 UTC] WordPress database error Table 'harmakko_wp154.wpjw_cookieadmin_consents' doesn't exist for query SHOW FULL COLUMNS FROM `wpjw_cookieadmin_consents` made by do_action('wp_ajax_cookieadmin_pro_ajax_handler'), WP_Hook->do_action, WP_Hook->apply_filters, cookieadmin_pro_ajax_handler, CookieAdminPro\Enduser::save_consent
+[25-Aug-2025 18:39:43 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 18:39:43 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[25-Aug-2025 18:39:43 UTC] WordPress database error Table 'harmakko_wp154.wpjw_cookieadmin_consents' doesn't exist for query SHOW FULL COLUMNS FROM `wpjw_cookieadmin_consents` made by do_action('wp_ajax_nopriv_cookieadmin_pro_ajax_handler'), WP_Hook->do_action, WP_Hook->apply_filters, cookieadmin_pro_ajax_handler, CookieAdminPro\Enduser::save_consent
+[26-Aug-2025 06:23:24 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[26-Aug-2025 06:23:24 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[26-Aug-2025 06:23:29 UTC] WordPress database error Table 'harmakko_wp154.wpjw_cookieadmin_consents' doesn't exist for query SHOW FULL COLUMNS FROM `wpjw_cookieadmin_consents` made by do_action('wp_ajax_nopriv_cookieadmin_pro_ajax_handler'), WP_Hook->do_action, WP_Hook->apply_filters, cookieadmin_pro_ajax_handler, CookieAdminPro\Enduser::save_consent
+[26-Aug-2025 10:54:28 UTC] PHP Warning:  Undefined array key "editor_post_id" in /home1/harmakko/public_html/WP/wp-content/plugins/elementor/modules/history/revisions-manager.php on line 363
+[26-Aug-2025 11:07:37 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_gallery_image_ids() on false in /home1/harmakko/public_html/WP/wp-content/plugins/elementor/modules/ai/module.php:351
+Stack trace:
+#0 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(324): Elementor\Modules\Ai\Module->get_product_images_ajax('')
+#1 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#2 /home1/harmakko/public_html/WP/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /home1/harmakko/public_html/WP/wp-admin/admin-ajax.php(192): do_action('wp_ajax_element...')
+#4 {main}
+  thrown in /home1/harmakko/public_html/WP/wp-content/plugins/elementor/modules/ai/module.php on line 351
+[26-Aug-2025 18:00:45 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[26-Aug-2025 18:00:45 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[26-Aug-2025 18:00:46 UTC] WordPress database error Table 'harmakko_wp154.wpjw_cookieadmin_consents' doesn't exist for query SHOW FULL COLUMNS FROM `wpjw_cookieadmin_consents` made by do_action('wp_ajax_nopriv_cookieadmin_pro_ajax_handler'), WP_Hook->do_action, WP_Hook->apply_filters, cookieadmin_pro_ajax_handler, CookieAdminPro\Enduser::save_consent
+[27-Aug-2025 08:51:44 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_gallery_image_ids() on false in /home1/harmakko/public_html/WP/wp-content/plugins/elementor/modules/ai/module.php:351
+Stack trace:
+#0 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(324): Elementor\Modules\Ai\Module->get_product_images_ajax('')
+#1 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#2 /home1/harmakko/public_html/WP/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /home1/harmakko/public_html/WP/wp-admin/admin-ajax.php(192): do_action('wp_ajax_element...')
+#4 {main}
+  thrown in /home1/harmakko/public_html/WP/wp-content/plugins/elementor/modules/ai/module.php on line 351
+[27-Aug-2025 10:06:48 UTC] WordPress database error Table 'harmakko_wp154.wpjw_gla_ads_recommendations' doesn't exist for query SELECT * FROM `wpjw_gla_ads_recommendations`
+WHERE
+recommendation_type = 'IMPROVE_PERFORMANCE_MAX_AD_STRENGTH' made by require_once('wp-admin/admin.php'), require('wp-admin/menu.php'), require_once('wp-admin/includes/menu.php'), do_action('admin_menu'), WP_Hook->do_action, WP_Hook->apply_filters, Automattic\WooCommerce\GoogleListingsAndAds\Menu\NotificationManager->display_aggregated_notification_pill, Automattic\WooCommerce\GoogleListingsAndAds\Menu\NotificationManager->initial_notification_count, Automattic\WooCommerce\GoogleListingsAndAds\Ads\AdsRecommendationsService->get_recommendations, Automattic\WooCommerce\GoogleListingsAndAds\DB\Query->get_results, Automattic\WooCommerce\GoogleListingsAndAds\DB\Query->query_results
+[27-Aug-2025 10:11:08 UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_gallery_image_ids() on false in /home1/harmakko/public_html/WP/wp-content/plugins/elementor/modules/ai/module.php:351
+Stack trace:
+#0 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(324): Elementor\Modules\Ai\Module->get_product_images_ajax('')
+#1 /home1/harmakko/public_html/WP/wp-includes/class-wp-hook.php(348): WP_Hook->apply_filters('', Array)
+#2 /home1/harmakko/public_html/WP/wp-includes/plugin.php(517): WP_Hook->do_action(Array)
+#3 /home1/harmakko/public_html/WP/wp-admin/admin-ajax.php(192): do_action('wp_ajax_element...')
+#4 {main}
+  thrown in /home1/harmakko/public_html/WP/wp-content/plugins/elementor/modules/ai/module.php on line 351
+[30-Aug-2025 09:07:49 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[30-Aug-2025 09:07:49 UTC] PHP Warning:  Trying to access array offset on null in /home1/harmakko/public_html/WP/wp-content/plugins/cookieadmin-pro/includes/enduser.php on line 105
+[30-Aug-2025 09:07:50 UTC] WordPress database error Table 'harmakko_wp154.wpjw_cookieadmin_consents' doesn't exist for query SHOW FULL COLUMNS FROM `wpjw_cookieadmin_consents` made by do_action('wp_ajax_cookieadmin_pro_ajax_handler'), WP_Hook->do_action, WP_Hook->apply_filters, cookieadmin_pro_ajax_handler, CookieAdminPro\Enduser::save_consent

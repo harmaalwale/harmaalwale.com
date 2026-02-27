@@ -1,0 +1,154 @@
+<?php //is_granted%2528%2527read%2527%252C%2520%2527ADMINMODULESSF_%2527%2529%2520%257C%257C%2520is_granted%2528%2527create%2527%252C%2520%2527ADMINMODULESSF_%2527%2529%2520%257C%257C%2520is_granted%2528%2527update%2527%252C%2520%2527ADMINMODULESSF_%2527%2529%2520%257C%257C%2520is_granted%2528%2527delete%2527%252C%2520%2527ADMINMODULESSF_%2527%2529%252F%252Fauth_checker%257Cobject%257Crequest%257Crole_names%257Csubject%257Ctoken%257Ctrust_resolver%257Cuser
+
+return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (($p = &\Symfony\Component\VarExporter\Internal\Registry::$prototypes)['Symfony\\Component\\ExpressionLanguage\\ParsedExpression'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\ExpressionLanguage\\ParsedExpression')),
+        clone ($p['Symfony\\Component\\ExpressionLanguage\\Node\\BinaryNode'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\ExpressionLanguage\\Node\\BinaryNode')),
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\BinaryNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\BinaryNode'],
+        clone ($p['Symfony\\Component\\ExpressionLanguage\\Node\\FunctionNode'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\ExpressionLanguage\\Node\\FunctionNode')),
+        clone ($p['Symfony\\Component\\ExpressionLanguage\\Node\\Node'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\ExpressionLanguage\\Node\\Node')),
+        clone ($p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode')),
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\FunctionNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\Node'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\FunctionNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\Node'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\FunctionNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\Node'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'],
+        clone $p['Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode'],
+    ],
+    null,
+    [
+        'Symfony\\Component\\ExpressionLanguage\\Expression' => [
+            'expression' => [
+                'is_granted(\'read\', \'ADMINMODULESSF_\') || is_granted(\'create\', \'ADMINMODULESSF_\') || is_granted(\'update\', \'ADMINMODULESSF_\') || is_granted(\'delete\', \'ADMINMODULESSF_\')',
+            ],
+        ],
+        'Symfony\\Component\\ExpressionLanguage\\ParsedExpression' => [
+            'nodes' => [
+                $o[1],
+            ],
+        ],
+        'stdClass' => [
+            'nodes' => [
+                1 => [
+                    'left' => $o[2],
+                    'right' => $o[16],
+                ],
+                [
+                    'left' => $o[3],
+                    'right' => $o[12],
+                ],
+                [
+                    'left' => $o[4],
+                    'right' => $o[8],
+                ],
+                [
+                    'arguments' => $o[5],
+                ],
+                [
+                    $o[6],
+                    $o[7],
+                ],
+                8 => [
+                    'arguments' => $o[9],
+                ],
+                [
+                    $o[10],
+                    $o[11],
+                ],
+                12 => [
+                    'arguments' => $o[13],
+                ],
+                [
+                    $o[14],
+                    $o[15],
+                ],
+                16 => [
+                    'arguments' => $o[17],
+                ],
+                [
+                    $o[18],
+                    $o[19],
+                ],
+            ],
+            'attributes' => [
+                1 => [
+                    'operator' => '||',
+                ],
+                [
+                    'operator' => '||',
+                ],
+                [
+                    'operator' => '||',
+                ],
+                [
+                    'name' => 'is_granted',
+                ],
+                6 => [
+                    'value' => 'read',
+                ],
+                [
+                    'value' => 'ADMINMODULESSF_',
+                ],
+                [
+                    'name' => 'is_granted',
+                ],
+                10 => [
+                    'value' => 'create',
+                ],
+                [
+                    'value' => 'ADMINMODULESSF_',
+                ],
+                [
+                    'name' => 'is_granted',
+                ],
+                14 => [
+                    'value' => 'update',
+                ],
+                [
+                    'value' => 'ADMINMODULESSF_',
+                ],
+                [
+                    'name' => 'is_granted',
+                ],
+                18 => [
+                    'value' => 'delete',
+                ],
+                [
+                    'value' => 'ADMINMODULESSF_',
+                ],
+            ],
+        ],
+        'Symfony\\Component\\ExpressionLanguage\\Node\\ConstantNode' => [
+            'isNullSafe' => [
+                6 => false,
+                false,
+                10 => false,
+                false,
+                14 => false,
+                false,
+                18 => false,
+                false,
+            ],
+            'isIdentifier' => [
+                6 => false,
+                false,
+                10 => false,
+                false,
+                14 => false,
+                false,
+                18 => false,
+                false,
+            ],
+        ],
+    ],
+    $o[0],
+    []
+)];
