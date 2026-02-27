@@ -7,17 +7,16 @@ on:
 
 jobs:
   deploy:
-    name: 🎉 Deploy Website
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 🚀 FTP Deploy
+      - name: Deploy to cPanel via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: harmaalwale.com
+          server: ftp.harmaalwale.com
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
