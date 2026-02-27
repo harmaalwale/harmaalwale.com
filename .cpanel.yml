@@ -4,8 +4,8 @@ deployment:
     # Set deploy path
     - export DEPLOYPATH=/home1/harmakko/public_html
 
-    # Sync all files to public_html (preserves existing files not in repo)
-    - rsync -av --exclude='.git' --exclude='.github' --exclude='.cpanel.yml' --exclude='README.md' --exclude='deploy.bat' . $DEPLOYPATH/
+    # Force sync all files to public_html — overwrites existing files
+    - rsync -av --checksum --exclude='.git' --exclude='.github' --exclude='.cpanel.yml' --exclude='README.md' --exclude='deploy.bat' . $DEPLOYPATH/
 
     # Set correct permissions
     - find $DEPLOYPATH/api -name "*.php" -exec chmod 644 {} \;
