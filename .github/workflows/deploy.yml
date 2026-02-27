@@ -1,4 +1,4 @@
-name: 🚀 Auto Deploy to cPanel
+name: Deploy to cPanel via Git
 
 on:
   push:
@@ -7,22 +7,19 @@ on:
 
 jobs:
   deploy:
+    name: Trigger cPanel Pull
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy to cPanel via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ftp.harmaalwale.com
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./
-          server-dir: public_html/
-          exclude: |
-            **/.git*
-            **/.github*
+      - name: Ping cPanel Git Webhook
+        run: |
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST "${{ secrets.CPANEL_WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            --max-time 30)
+          echo "cPanel webhook response: $RESPONSE"
+          if [ "$RESPONSE" -ge 200 ] && [ "$RESPONSE" -lt 400 ]; then
+            echo "✅ cPanel pull triggered successfully"
+          else
+            echo "⚠️  Unexpected response: $RESPONSE (deploy may still succeed)"
+          fi
