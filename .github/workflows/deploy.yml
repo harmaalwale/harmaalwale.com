@@ -12,35 +12,23 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          # Setup SSH key
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-
-          # Add host with legacy kex algorithm support
           ssh-keyscan -p 22 -H 192.185.129.210 >> ~/.ssh/known_hosts 2>/dev/null || true
-
-          # Deploy via SSH with compatible algorithm
           ssh -i ~/.ssh/id_rsa \
             -o StrictHostKeyChecking=no \
             -o KexAlgorithms=+diffie-hellman-group-exchange-sha256 \
             -o HostKeyAlgorithms=+ssh-rsa \
             -o PubkeyAcceptedAlgorithms=+ssh-rsa \
-            harmakko@192.185.129.210 << 'ENDSSH'
-            echo "📥 Pulling latest code..."
-            cd /home1/harmakko/repositories/harmaalwale.com
-            git pull origin main
-
-            echo "📂 Copying to public_html..."
-            cp -rf . /home1/harmakko/public_html/
-
-            echo "🧹 Cleaning dev files..."
-            rm -rf /home1/harmakko/public_html/.git
-            rm -rf /home1/harmakko/public_html/.github
-            rm -f  /home1/harmakko/public_html/deploy.bat
-            rm -f  /home1/harmakko/public_html/.cpanel.yml
-            rm -f  /home1/harmakko/public_html/*.rar
-            rm -f  /home1/harmakko/public_html/*.7z
-
-            echo "✅ Deployed at $(date)"
-ENDSSH
+            harmakko@192.185.129.210 \
+            "cd /home1/harmakko/repositories/harmaalwale.com && \
+             git pull origin main && \
+             cp -rf . /home1/harmakko/public_html/ && \
+             rm -rf /home1/harmakko/public_html/.git && \
+             rm -rf /home1/harmakko/public_html/.github && \
+             rm -f /home1/harmakko/public_html/deploy.bat && \
+             rm -f /home1/harmakko/public_html/.cpanel.yml && \
+             rm -f /home1/harmakko/public_html/*.rar && \
+             rm -f /home1/harmakko/public_html/*.7z && \
+             echo Deployed at \$(date)"
