@@ -22,7 +22,9 @@ jobs:
             -o HostKeyAlgorithms=+ssh-rsa \
             -o PubkeyAcceptedAlgorithms=+ssh-rsa \
             harmakko@192.185.129.210 \
-            "cd /home1/harmakko/repositories/harmaalwale.com && \
+            "git config --global user.email 'deploy@harmaalwale.com' && \
+             git config --global user.name 'HarmaalWale Deploy' && \
+             cd /home1/harmakko/repositories/harmaalwale.com && \
              git pull origin main && \
              cp -rf . /home1/harmakko/public_html/ && \
              rm -rf /home1/harmakko/public_html/.git && \
