@@ -30,7 +30,7 @@ ssh -i "%USERPROFILE%\.ssh\id_rsa" ^
     -o HostKeyAlgorithms=+ssh-rsa ^
     -o PubkeyAcceptedAlgorithms=+ssh-rsa ^
     harmakko@192.185.129.210 ^
-    "git config --global user.email 'deploy@harmaalwale.com' && git config --global user.name 'Deploy' && cd /home1/harmakko/repositories/harmaalwale.com && git pull origin main && cp -rf . /home1/harmakko/public_html/ && rm -rf /home1/harmakko/public_html/.git /home1/harmakko/public_html/.github && rm -f /home1/harmakko/public_html/deploy.bat /home1/harmakko/public_html/.cpanel.yml && echo DONE"
+    "cd /home1/harmakko/repositories/harmaalwale.com && git fetch origin && git reset --hard origin/main && cp -rf . /home1/harmakko/public_html/ && rm -rf /home1/harmakko/public_html/.git /home1/harmakko/public_html/.github && rm -f /home1/harmakko/public_html/deploy.bat /home1/harmakko/public_html/.cpanel.yml && echo Deployed at $(date)"
 
 echo.
 echo ==========================================
