@@ -9,12 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚀 SSH Deploy to cPanel
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: 192.185.129.210
-          username: harmakko
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          # Setup SSH key
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Add host with legacy kex algorithm support
+          ssh-keyscan -p 22 -H 192.185.129.210 >> ~/.ssh/known_hosts 2>/dev/null || true
+
+          # Deploy via SSH with compatible algorithm
+          ssh -i ~/.ssh/id_rsa \
+            -o StrictHostKeyChecking=no \
+            -o KexAlgorithms=+diffie-hellman-group-exchange-sha256 \
+            -o HostKeyAlgorithms=+ssh-rsa \
+            -o PubkeyAcceptedAlgorithms=+ssh-rsa \
+            harmakko@192.185.129.210 << 'ENDSSH'
             echo "📥 Pulling latest code..."
             cd /home1/harmakko/repositories/harmaalwale.com
             git pull origin main
@@ -31,3 +43,4 @@ jobs:
             rm -f  /home1/harmakko/public_html/*.7z
 
             echo "✅ Deployed at $(date)"
+ENDSSH
