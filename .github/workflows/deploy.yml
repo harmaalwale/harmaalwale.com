@@ -8,24 +8,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: 🚀 Pull & Deploy via cPanel
-        run: |
-          echo "Step 1: Pulling latest code from GitHub into cPanel..."
-          curl -s -k \
-            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
-            "https://cp-ht-2.webhostbox.net:2083/execute/VersionControl/update?repository_root=/home1/harmakko/repositories/harmaalwale.com"
-          
-          echo "Step 2: Triggering deployment task (cpanel.yml)..."
-          curl -s -k \
-            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
-            "https://cp-ht-2.webhostbox.net:2083/execute/VersionControlDeployment/create?repository_root=/home1/harmakko/repositories/harmaalwale.com"
-          
-          echo "Step 3: Waiting for deployment to complete..."
-          sleep 10
-          
-          echo "Step 4: Checking deployment status..."
-          curl -s -k \
-            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
-            "https://cp-ht-2.webhostbox.net:2083/execute/VersionControlDeployment/retrieve?repository_root=/home1/harmakko/repositories/harmaalwale.com"
-          
-          echo "✅ Done!"
+      - name: 🚀 SSH Deploy to cPanel
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 192.185.129.210
+          username: harmakko
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "📥 Pulling latest code..."
+            cd /home1/harmakko/repositories/harmaalwale.com
+            git pull origin main
+
+            echo "📂 Copying to public_html..."
+            cp -rf . /home1/harmakko/public_html/
+
+            echo "🧹 Cleaning dev files..."
+            rm -rf /home1/harmakko/public_html/.git
+            rm -rf /home1/harmakko/public_html/.github
+            rm -f  /home1/harmakko/public_html/deploy.bat
+            rm -f  /home1/harmakko/public_html/.cpanel.yml
+            rm -f  /home1/harmakko/public_html/*.rar
+            rm -f  /home1/harmakko/public_html/*.7z
+
+            echo "✅ Deployed at $(date)"
