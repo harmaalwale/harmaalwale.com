@@ -20,7 +20,7 @@ if errorlevel 1 (
 :: Push - works whether local branch is main or master
 echo.
 echo Pushing to GitHub...
-git push origin HEAD:main
+git push origin HEAD:main --force
 
 echo.
 echo ==========================================
