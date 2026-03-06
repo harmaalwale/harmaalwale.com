@@ -1,0 +1,3 @@
+[24-Aug-2025 07:34:10 UTC] PHP Warning:  Constant PASSWORD_DEFAULT already defined in /home1/harmakko/public_html/PS/update_pass.php on line 17
+[24-Aug-2025 03:34:37 US/Eastern] PHP Warning:  session_set_cookie_params(): Session cookie parameters cannot be changed after headers have already been sent in /home1/harmakko/public_html/PS/src/Core/Session/SessionHandler.php on line 98
+[24-Aug-2025 03:34:46 US/Eastern] PHP Warning:  session_start(): Session cannot be started after headers have already been sent in /home1/harmakko/public_html/PS/classes/controller/FrontController.php on line 742

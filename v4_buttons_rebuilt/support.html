@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Customer Support | HarmaalWale</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{--orange:#E87000;--orange-light:#FF8C1A;--black:#111;--dark:#1a1a1a;--gray:#2e2e2e;--light:#f7f7f7;--white:#fff;--muted:#888}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Barlow',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden}
+
+header{position:sticky;top:0;z-index:100;background:var(--black);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:70px;box-shadow:0 2px 20px rgba(0,0,0,0.4)}
+.logo img{height:44px;display:block;cursor:pointer}
+.header-right{display:flex;align-items:center;gap:16px}
+.back-btn{display:flex;align-items:center;gap:6px;color:#888;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border:1px solid #333;padding:7px 14px;border-radius:5px;transition:all .2s}
+.back-btn:hover{border-color:var(--orange);color:var(--orange)}
+
+/* HERO */
+.support-hero{background:var(--black);padding:60px;position:relative;overflow:hidden;text-align:center}
+.support-hero::before{content:'';position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(232,112,0,0.12) 0%,transparent 65%);border-radius:50%}
+.hero-tag{display:inline-block;background:rgba(232,112,0,.15);border:1px solid rgba(232,112,0,.3);color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:6px 18px;border-radius:999px;margin-bottom:20px}
+.support-hero h1{font-family:'Barlow Condensed',sans-serif;font-size:72px;font-weight:900;text-transform:uppercase;color:#fff;line-height:.9;margin-bottom:20px;position:relative;z-index:1}
+.support-hero h1 span{color:var(--orange)}
+.support-hero p{color:#777;font-size:16px;line-height:1.7;max-width:540px;margin:0 auto;position:relative;z-index:1}
+
+/* QUICK ACTIONS */
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:50px 60px;background:var(--light)}
+.qa-card{background:var(--white);border:1px solid #eee;border-radius:12px;padding:28px 24px;text-align:center;cursor:pointer;transition:all .3s;text-decoration:none;color:var(--black)}
+.qa-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.1);border-color:var(--orange)}
+.qa-icon{font-size:40px;margin-bottom:14px;display:block}
+.qa-card h3{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;margin-bottom:6px}
+.qa-card p{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* FAQ SECTION */
+.faq-section{padding:60px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;line-height:1;margin-bottom:8px}
+.section-title span{color:var(--orange)}
+.section-sub{font-size:14px;color:var(--muted);margin-bottom:36px}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.faq-item{background:var(--light);border:1px solid #eee;border-radius:10px;overflow:hidden}
+.faq-q{padding:18px 20px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+.faq-q:hover{background:#eee}
+.faq-q.open{background:var(--black);color:#fff}
+.faq-q .faq-arrow{font-size:18px;transition:transform .25s}
+.faq-q.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{display:none;padding:16px 20px;font-size:14px;color:#555;line-height:1.7;border-top:1px solid #e5e5e5;background:#fff}
+.faq-a.open{display:block}
+
+/* CONTACT FORM */
+.contact-section{padding:60px;background:var(--black);position:relative;overflow:hidden}
+.contact-section::before{content:'';position:absolute;right:-100px;top:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(232,112,0,0.1) 0%,transparent 65%);border-radius:50%}
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;position:relative;z-index:1}
+.contact-info h2{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:900;text-transform:uppercase;color:#fff;line-height:.9;margin-bottom:20px}
+.contact-info h2 span{color:var(--orange)}
+.contact-info p{color:#666;font-size:14px;line-height:1.7;margin-bottom:28px}
+.contact-methods{display:flex;flex-direction:column;gap:16px}
+.contact-method{display:flex;align-items:flex-start;gap:14px}
+.cm-icon{font-size:24px;margin-top:2px}
+.cm-text strong{display:block;color:#fff;font-size:14px;font-weight:700;margin-bottom:2px}
+.cm-text span{color:#555;font-size:13px}
+.cm-text a{color:var(--orange);text-decoration:none}
+.cm-text a:hover{text-decoration:underline}
+.hours-box{background:#1a1a1a;border:1px solid #252525;border-radius:10px;padding:20px;margin-top:24px}
+.hours-box h4{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+.hours-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid #222}
+.hours-row:last-child{border:none}
+.hours-row .day{color:#666}
+.hours-row .time{color:#ccc;font-weight:600}
+
+/* FORM */
+.contact-form-wrap{background:#141414;border:1px solid #222;border-radius:14px;padding:36px}
+.contact-form-wrap h3{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:6px}
+.contact-form-wrap p{font-size:13px;color:#555;margin-bottom:24px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#555;margin-bottom:7px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:7px;padding:11px 14px;color:#fff;font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--orange)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:#3a3a3a}
+.form-group select{cursor:pointer}
+.form-group select option{background:#1e1e1e}
+.form-group textarea{resize:vertical;min-height:120px}
+.submit-btn{width:100%;background:var(--orange);color:#fff;border:none;padding:14px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:all .2s}
+.submit-btn:hover{background:var(--orange-light)}
+.form-success{display:none;background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.3);border-radius:8px;padding:16px 20px;color:#4CAF50;font-size:14px;font-weight:600;margin-top:14px;text-align:center}
+
+/* POLICIES */
+.policies-section{padding:60px;background:var(--light)}
+.policies-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.policy-card{background:#fff;border:1px solid #eee;border-radius:12px;padding:28px}
+.policy-icon{font-size:36px;margin-bottom:14px;display:block}
+.policy-card h3{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;margin-bottom:10px}
+.policy-card p{font-size:13px;color:var(--muted);line-height:1.7}
+
+footer{background:var(--black);color:#444;padding:28px 60px;display:flex;justify-content:space-between;align-items:center;font-size:12px;border-top:1px solid #1a1a1a}
+footer a{color:var(--orange);text-decoration:none}
+
+@media(max-width:900px){
+  .quick-actions,.faq-grid,.policies-grid{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .faq-section,.contact-section,.policies-section,.support-hero{padding:36px 24px}
+  .quick-actions{padding:36px 24px}
+  .support-hero h1{font-size:52px}
+}
+@media(max-width:600px){
+  header{padding:0 16px}
+  .quick-actions,.faq-grid,.policies-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><img src="logo.jpg" alt="HarmaalWale" onclick="window.location.href='index.html'"></div>
+  <div class="header-right">
+    <button class="icon-btn" id="hw-account-btn" title="Account" style="background:none;border:none;color:#ccc;font-size:22px;cursor:pointer;">👤</button>
+    <a href="index.html" class="back-btn">← Back to Home</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="support-hero">
+  <div class="hero-tag">🎧 We're Here For You</div>
+  <h1>Customer<br><span>Support</span></h1>
+  <p>Whatever you need — product queries, order help, or something we don't yet list — we're just a message away. No question is too small.</p>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="quick-actions">
+  <a href="mailto:support@harmaalwale.com" class="qa-card">
+    <span class="qa-icon">📧</span>
+    <h3>Email Us</h3>
+    <p>Send us your query anytime. We respond within 24 hours.</p>
+  </a>
+  <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20HarmaalWale%2C%20I%20need%20help%20with%20" class="qa-card" target="_blank">
+    <span class="qa-icon">💬</span>
+    <h3>WhatsApp</h3>
+    <p>Chat with us directly on WhatsApp for faster responses.</p>
+  </a>
+  <a href="#contact-form" class="qa-card" onclick="setTimeout(()=>document.getElementById('cf-name').focus(),400)">
+    <span class="qa-icon">📝</span>
+    <h3>Drop a Message</h3>
+    <p>Fill out our contact form and we'll get back to you shortly.</p>
+  </a>
+  <a href="#faq" class="qa-card">
+    <span class="qa-icon">❓</span>
+    <h3>FAQs</h3>
+    <p>Find quick answers to the most common questions.</p>
+  </a>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section" id="faq">
+  <div class="section-title">Frequently Asked <span>Questions</span></div>
+  <div class="section-sub">Can't find your answer? Use the contact form below.</div>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>How do I place an order?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Browse any active category, click on a product to view details, then click "Add to Cart". Once you've added everything you need, go to your cart and proceed to checkout. You'll need a verified account to place an order.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Do you sell products not listed on the site?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Absolutely! HarmaalWale is a universal marketplace. If you don't see what you're looking for, simply contact us through the form below or email us at support@harmaalwale.com and we'll source it for you.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>How long does delivery take?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Delivery timelines depend on your location and the product category. Standard delivery takes 3–7 business days across India. For specific product ETAs, feel free to contact us before ordering.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>What payment methods do you accept?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">We currently support Cash on Delivery (COD). Online payment options including UPI, cards, and net banking are coming soon. Stay tuned!</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Are the MFD machines refurbished or new?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Our MFD units are certified refurbished machines — thoroughly tested, cleaned, and quality-checked before listing. All spares are genuine OEM parts. We stand behind every product we sell.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>How do I track my order?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Once your order is shipped, you'll receive tracking details. You can also log into your account and visit "My Orders" to check your order status at any time.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Can I return or exchange a product?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Yes. If you receive a damaged or incorrect product, contact us within 48 hours of delivery with photos and we'll arrange a replacement or resolution. Product condition and category-specific policies apply.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>How do I verify my account?</span><span class="faq-arrow">▼</span></div>
+      <div class="faq-a">After registering, a verification email is sent to your inbox. Click the link inside to activate your account. If you didn't receive it, use the "Resend Verification" option on the login screen.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT FORM -->
+<div class="contact-section" id="contact-form">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h2>Get In<br><span>Touch</span></h2>
+      <p>Have a question, a custom product request, or just want to say hello? We love hearing from our customers. Our team will respond within 24 hours on business days.</p>
+      <div class="contact-methods">
+        <div class="contact-method">
+          <span class="cm-icon">📧</span>
+          <div class="cm-text">
+            <strong>Email Support</strong>
+            <span><a href="mailto:support@harmaalwale.com">support@harmaalwale.com</a></span>
+          </div>
+        </div>
+        <div class="contact-method">
+          <span class="cm-icon">🛒</span>
+          <div class="cm-text">
+            <strong>Can't find a product?</strong>
+            <span>Tell us what you need and we'll find it for you — no category limits.</span>
+          </div>
+        </div>
+        <div class="contact-method">
+          <span class="cm-icon">📍</span>
+          <div class="cm-text">
+            <strong>Based In</strong>
+            <span>Jaipur, Rajasthan, India</span>
+          </div>
+        </div>
+      </div>
+      <div class="hours-box">
+        <h4>⏰ Support Hours</h4>
+        <div class="hours-row"><span class="day">Monday – Friday</span><span class="time">10:00 AM – 7:00 PM</span></div>
+        <div class="hours-row"><span class="day">Saturday</span><span class="time">10:00 AM – 4:00 PM</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span class="time">Closed</span></div>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <h3>Send Us a Message</h3>
+      <p>We reply to every message. Don't hesitate to reach out.</p>
+      <div class="form-row">
+        <div class="form-group"><label>Your Name</label><input type="text" id="cf-name" placeholder="Full name"></div>
+        <div class="form-group"><label>Email Address</label><input type="email" id="cf-email" placeholder="your@email.com"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Phone (optional)</label><input type="tel" id="cf-phone" placeholder="+91 98765 43210"></div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select id="cf-subject">
+            <option value="">Select a topic...</option>
+            <option value="Order Issue">Order Issue</option>
+            <option value="Product Query">Product Query</option>
+            <option value="Custom Product Request">Custom Product Request</option>
+            <option value="MFD / Spares Enquiry">MFD / Spares Enquiry</option>
+            <option value="Fashion Enquiry">Fashion Enquiry</option>
+            <option value="Account Help">Account Help</option>
+            <option value="Payment Issue">Payment Issue</option>
+            <option value="Bulk / Wholesale Enquiry">Bulk / Wholesale Enquiry</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Your Message</label><textarea id="cf-message" placeholder="Tell us what you need. If requesting a custom product, please include as many details as possible — brand, model, quantity, budget, etc."></textarea></div>
+      <button class="submit-btn" onclick="submitContact()">Send Message →</button>
+      <div class="form-success" id="cf-success">✅ Message sent! We'll get back to you within 24 hours.</div>
+    </div>
+  </div>
+</div>
+
+<!-- POLICIES -->
+<div class="policies-section">
+  <div class="section-title" style="margin-bottom:8px">Our <span>Policies</span></div>
+  <div class="section-sub" style="margin-bottom:32px">We believe in transparency and fairness at every step.</div>
+  <div class="policies-grid">
+    <div class="policy-card">
+      <span class="policy-icon">🚚</span>
+      <h3>Shipping Policy</h3>
+      <p>We ship pan-India. Delivery takes 3–7 business days. Orders above ₹499 qualify for free shipping. Heavy items like MFD machines may have separate shipping charges communicated at checkout.</p>
+    </div>
+    <div class="policy-card">
+      <span class="policy-icon">🔄</span>
+      <h3>Replacement Policy</h3>
+      <p>If you receive a damaged or incorrect item, contact us within 48 hours with unboxing photos. We will arrange a replacement at no additional cost. Products must be unused and in original packaging.</p>
+    </div>
+    <div class="policy-card">
+      <span class="policy-icon">🔒</span>
+      <h3>Privacy & Security</h3>
+      <p>Your data is safe with us. We never sell or share your personal information with third parties. All account data is encrypted and stored securely on our servers.</p>
+    </div>
+    <div class="policy-card">
+      <span class="policy-icon">✅</span>
+      <h3>Quality Assurance</h3>
+      <p>Every product listed on HarmaalWale — especially refurbished MFD machines — goes through rigorous quality checks before dispatch. We stand behind what we sell.</p>
+    </div>
+    <div class="policy-card">
+      <span class="policy-icon">💰</span>
+      <h3>Pricing Policy</h3>
+      <p>We believe in fair and transparent pricing with no hidden charges. The price you see is what you pay. Any applicable delivery charges will be clearly shown before checkout.</p>
+    </div>
+    <div class="policy-card">
+      <span class="policy-icon">🤝</span>
+      <h3>Custom Orders</h3>
+      <p>Don't see what you need? We source products on request. Bulk and wholesale enquiries are welcome. Contact our team and we'll work out the best deal for you.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 HarmaalWale. All rights reserved.</span>
+  <a href="index.html">← Back to Home</a>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
+  if (!isOpen) { el.classList.add('open'); el.nextElementSibling.classList.add('open'); }
+}
+
+async function submitContact() {
+  const name    = document.getElementById('cf-name').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const phone   = document.getElementById('cf-phone').value.trim();
+  const subject = document.getElementById('cf-subject').value;
+  const message = document.getElementById('cf-message').value.trim();
+  const btn     = document.querySelector('.submit-btn');
+
+  if (!name || !email || !message) {
+    alert('Please fill in your name, email and message.');
+    return;
+  }
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  // 1. Save to database
+  let saved = false;
+  try {
+    const res  = await fetch('api/enquiries.php', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({name, email, phone, subject, message})
+    });
+    const data = await res.json();
+    if (data.success) saved = true;
+  } catch(e) {}
+
+  // 2. Always open mailto so message reaches support@harmaalwale.com
+  const mailBody = `Name: ${name}\nEmail: ${email}\nPhone: ${phone||'Not provided'}\nSubject: ${subject||'General Enquiry'}\n\nMessage:\n${message}`;
+  const mailLink = `mailto:support@harmaalwale.com?subject=${encodeURIComponent('HarmaalWale Enquiry: '+(subject||'General'))}&body=${encodeURIComponent(mailBody)}`;
+
+  // Show success
+  document.getElementById('cf-success').style.display = 'block';
+  document.getElementById('cf-success').innerHTML = '✅ Message saved! <a href="' + mailLink + '" style="color:#4CAF50;font-weight:700">Click here to also send via email →</a>';
+  ['cf-name','cf-email','cf-phone','cf-message'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('cf-subject').value='';
+  btn.textContent = 'Send Message →';
+  btn.disabled = false;
+
+  // Auto-open email client
+  window.location.href = mailLink;
+}
+</script>
+<script src="auth_widget.js"></script>
+</body>
+</html>

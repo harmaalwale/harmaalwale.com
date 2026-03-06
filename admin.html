@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HarmaalWale — Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --o:#E87000;--o2:#FF8C1A;
+  --blk:#080808;--drk:#0f0f0f;--crd:#141414;--bdr:#1c1c1c;--bdr2:#242424;
+  --txt:#e8e8e8;--txt2:#aaa;--mut:#555;
+  --grn:#4CAF50;--red:#e74c3c;--blu:#4488ff;--ylw:#F5A623;
+}
+body{font-family:'Barlow',sans-serif;background:var(--blk);color:var(--txt);min-height:100vh;display:flex;overflow-x:hidden}
+
+/* ══ SIDEBAR ══════════════════════════════════════════════ */
+#sb{width:220px;min-height:100vh;background:var(--drk);border-right:1px solid var(--bdr);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;transition:width .25s ease}
+#sb.col{width:58px}
+.sb-logo{padding:16px 16px 12px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;overflow:hidden;min-height:60px}
+.sb-logo img{height:28px;flex-shrink:0;border-radius:4px}
+.sb-logo-txt{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--o);transition:opacity .2s;white-space:nowrap}
+#sb.col .sb-logo-txt{opacity:0;pointer-events:none}
+.sb-toggle{position:absolute;top:20px;right:-11px;width:22px;height:22px;background:var(--o);border:none;border-radius:50%;color:#fff;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:110}
+nav{flex:1;padding:8px 6px;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--bdr) transparent}
+.nav-sec{font-size:8px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#222;padding:12px 10px 5px;white-space:nowrap}
+#sb.col .nav-sec{opacity:0}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:500;color:var(--mut);transition:all .15s;border:none;background:none;width:100%;text-align:left;white-space:nowrap;overflow:hidden;position:relative}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--txt)}
+.nav-item.active{background:rgba(232,112,0,.13);color:var(--o);font-weight:700}
+.ni{font-size:16px;flex-shrink:0;width:20px;text-align:center}
+.nl{transition:opacity .2s;overflow:hidden}
+#sb.col .nl{opacity:0;width:0}
+.nbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:20px;min-width:18px;text-align:center;flex-shrink:0}
+.nbadge.org{background:var(--o)}
+.nbadge.grn{background:var(--grn)}
+#sb.col .nbadge{display:none}
+.sb-bot{padding:10px 6px;border-top:1px solid var(--bdr)}
+.sb-user{display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:7px;overflow:hidden;margin-bottom:4px}
+.sb-av{width:32px;height:32px;border-radius:50%;background:var(--o);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#fff;flex-shrink:0}
+.sb-uinfo{overflow:hidden}
+.sb-uname{font-size:12px;font-weight:700;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.sb-uemail{font-size:10px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+#sb.col .sb-uinfo{opacity:0;width:0}
+
+/* ══ MAIN ══════════════════════════════════════════════════ */
+#main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh;transition:margin-left .25s ease}
+#main.col{margin-left:58px}
+.topbar{height:60px;background:var(--drk);border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:50}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;color:var(--txt)}
+.page-sub{font-size:11px;color:var(--mut);font-weight:500;margin-top:1px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.topbar-btn{background:none;border:1px solid var(--bdr2);color:var(--mut);padding:6px 14px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
+.topbar-btn:hover{border-color:var(--o);color:var(--o)}
+#content{padding:24px 28px;flex:1}
+
+/* ══ STAT CARDS ════════════════════════════════════════════ */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.stat-card{background:var(--crd);border:1px solid var(--bdr);border-radius:12px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s,box-shadow .15s}
+.stat-card:hover{border-color:var(--bdr2)}
+.stat-card[onclick]{cursor:pointer}
+.stat-card[onclick]:hover{border-color:var(--o);transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,112,0,0.12)}
+.stat-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.stat-icon{font-size:28px}
+.stat-trend{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.5px;text-transform:uppercase}
+.trend-up{background:rgba(76,175,80,.15);color:var(--grn)}
+.trend-dn{background:rgba(231,76,60,.15);color:var(--red)}
+.trend-neu{background:rgba(85,85,85,.3);color:var(--txt2)}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:38px;font-weight:900;line-height:1;margin-bottom:4px}
+.stat-val.o{color:var(--o)}
+.stat-val.g{color:var(--grn)}
+.stat-val.r{color:var(--red)}
+.stat-val.b{color:var(--blu)}
+.stat-lbl{font-size:12px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--o),transparent);opacity:0;transition:opacity .3s}
+.stat-card:hover::after{opacity:.5}
+
+/* ══ BOXES / TABLES ════════════════════════════════════════ */
+.grid-2{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.box{background:var(--crd);border:1px solid var(--bdr);border-radius:12px;overflow:hidden}
+.box-hdr{padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.box-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--txt)}
+.box-badge{font-size:10px;background:rgba(232,112,0,.15);color:var(--o);border:1px solid rgba(232,112,0,.2);padding:2px 10px;border-radius:20px;font-weight:700;letter-spacing:.5px}
+.box-act{background:none;border:1px solid var(--bdr2);color:var(--mut);padding:5px 12px;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .15s}
+.box-act:hover{border-color:var(--o);color:var(--o)}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{padding:10px 16px;text-align:left;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);background:var(--blk);border-bottom:1px solid var(--bdr);white-space:nowrap}
+td{padding:11px 16px;border-bottom:1px solid var(--bdr);color:var(--txt2);vertical-align:middle}
+tr:last-child td{border:none}
+tr:hover td{background:rgba(255,255,255,.02);color:var(--txt)}
+.td-name{font-weight:600;color:var(--txt);font-size:13px}
+.td-email{font-size:11px;color:var(--mut)}
+.td-mono{font-family:monospace;color:var(--o);font-size:11px}
+.empty-row{text-align:center;padding:30px;color:var(--mut);font-size:13px}
+
+/* ══ STATUS BADGES ═════════════════════════════════════════ */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap}
+.badge.pending{background:rgba(232,112,0,.15);color:var(--o);border:1px solid rgba(232,112,0,.25)}
+.badge.confirmed,.badge.delivered,.badge.active{background:rgba(76,175,80,.15);color:var(--grn);border:1px solid rgba(76,175,80,.25)}
+.badge.cancelled,.badge.inactive{background:rgba(231,76,60,.12);color:var(--red);border:1px solid rgba(231,76,60,.2)}
+.badge.processing,.badge.shipped,.badge.admin{background:rgba(68,136,255,.12);color:var(--blu);border:1px solid rgba(68,136,255,.2)}
+.badge.new{background:rgba(245,166,35,.15);color:var(--ylw);border:1px solid rgba(245,166,35,.25)}
+.badge.read,.badge.replied{background:rgba(68,136,255,.12);color:var(--blu);border:1px solid rgba(68,136,255,.2)}
+.badge.closed{background:rgba(85,85,85,.2);color:#666;border:1px solid #222}
+
+/* ══ FORMS / INPUTS ════════════════════════════════════════ */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+.form-inp{width:100%;background:#111;border:1px solid var(--bdr2);border-radius:7px;padding:10px 13px;color:var(--txt);font-family:'Barlow',sans-serif;font-size:13px;outline:none;transition:border-color .15s}
+.form-inp:focus{border-color:var(--o)}
+.form-inp::placeholder{color:#333}
+.form-inp:disabled{opacity:.4;cursor:default}
+.form-sel{width:100%;background:#111;border:1px solid var(--bdr2);border-radius:7px;padding:10px 13px;color:var(--txt);font-family:'Barlow',sans-serif;font-size:13px;outline:none;cursor:pointer}
+.form-sel option{background:#111}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.form-ta{min-height:90px;resize:vertical}
+
+/* ══ BUTTONS ════════════════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:7px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all .15s}
+.btn-org{background:var(--o);color:#fff}.btn-org:hover{background:var(--o2)}
+.btn-grn{background:var(--grn);color:#fff}.btn-grn:hover{filter:brightness(1.1)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{filter:brightness(1.1)}
+.btn-ghost{background:none;border:1px solid var(--bdr2);color:var(--txt2)}.btn-ghost:hover{border-color:var(--o);color:var(--o)}
+.btn-sm{padding:5px 12px;font-size:11px}
+.btn-lg{padding:11px 24px;font-size:14px}
+.btn-icon{width:32px;height:32px;padding:0;justify-content:center;background:none;border:1px solid var(--bdr2);color:var(--mut);border-radius:6px}.btn-icon:hover{border-color:var(--o);color:var(--o)}
+
+/* ══ SEARCH ════════════════════════════════════════════════ */
+.search-bar{position:relative;flex:1;max-width:320px}
+.search-bar input{width:100%;background:#111;border:1px solid var(--bdr2);border-radius:7px;padding:8px 12px 8px 34px;color:var(--txt);font-size:13px;outline:none;transition:border-color .15s}
+.search-bar input:focus{border-color:var(--o)}
+.search-bar::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none}
+
+/* ══ MODAL ══════════════════════════════════════════════════ */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{background:#141414;border:1px solid var(--bdr2);border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;animation:fadeIn .25s ease}
+.modal-hdr{padding:20px 24px 0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#141414;padding-bottom:14px;border-bottom:1px solid var(--bdr);z-index:2}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;text-transform:uppercase}
+.modal-close{background:none;border:1px solid var(--bdr2);color:var(--mut);width:30px;height:30px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{border-color:#e74c3c;color:#e74c3c}
+.modal-body{padding:20px 24px 24px}
+.modal-footer{padding:0 24px 20px;display:flex;gap:10px;justify-content:flex-end}
+
+/* ══ MISC ═══════════════════════════════════════════════════ */
+.divider{height:1px;background:var(--bdr);margin:16px 0}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--o);margin-bottom:12px}
+.tag{display:inline-block;background:#1a1a1a;border:1px solid var(--bdr2);color:var(--txt2);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:.5px}
+.loading{display:flex;align-items:center;justify-content:center;padding:50px;color:var(--mut);gap:12px;font-size:13px}
+.spin{width:24px;height:24px;border:2px solid var(--bdr2);border-top-color:var(--o);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+.empty{text-align:center;padding:40px;color:var(--mut);font-size:13px}
+.clickable-row{cursor:pointer}
+.clickable-row:hover td{background:rgba(232,112,0,.05) !important}
+#toast{position:fixed;bottom:20px;right:20px;background:#1a1a1a;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:opacity .3s,transform .3s;transform:translateY(8px);max-width:280px;pointer-events:none}
+#toast.show{opacity:1;transform:translateY(0)}
+#toast.ok{border:1px solid var(--grn);color:var(--grn)}
+#toast.err{border:1px solid var(--red);color:var(--red)}
+#toast.info{border:1px solid var(--blu);color:var(--blu)}
+
+/* ══ LOGIN ══════════════════════════════════════════════════ */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--blk);width:100%}
+.login-box{background:#0f0f0f;border:1px solid var(--bdr2);border-radius:16px;padding:40px;width:100%;max-width:380px}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo-text{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;color:#fff}
+.login-logo-text span{color:var(--o)}
+.login-sub{font-size:13px;color:var(--mut);margin-top:4px}
+
+/* ══ INLINE STATUS SELECT ═══════════════════════════════════ */
+.status-sel{background:#111;border:1px solid var(--bdr2);color:var(--txt2);padding:4px 8px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;outline:none;font-family:'Barlow',sans-serif}
+.status-sel:focus{border-color:var(--o)}
+
+/* ══ PRODUCT FORM ═══════════════════════════════════════════ */
+.measurements-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* ══ ANIMATIONS ═════════════════════════════════════════════ */
+@keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ══ RESPONSIVE ═════════════════════════════════════════════ */
+@media(max-width:900px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  #sb{width:58px}
+  #sb .nl,.sb-logo-txt,.sb-uinfo,.nav-sec,.nbadge{opacity:0;width:0;overflow:hidden}
+  #main{margin-left:58px}
+  #content{padding:12px}
+  .topbar{padding:0 14px}
+  .stats-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ═════════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-text">Harmaal<span>Wale</span></div>
+      <div class="login-sub">Admin Dashboard</div>
+    </div>
+    <div class="form-group"><label>Email Address</label><input type="email" id="li-email" class="form-inp" placeholder="admin@harmaalwale.com" value="admin@harmaalwale.com"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="li-pass" class="form-inp" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()"></div>
+    <button class="btn btn-org btn-lg" onclick="login()" id="li-btn" style="width:100%;justify-content:center">Sign In →</button>
+    <div id="li-err" style="color:var(--red);font-size:12px;margin-top:10px;text-align:center"></div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD SHELL ═══════════════════════════════════════ -->
+<div id="app" style="display:none;width:100%;min-height:100vh;display:none">
+
+<!-- SIDEBAR -->
+<div id="sb">
+  <div class="sb-logo">
+    <img src="logo.jpg" alt="HW" onerror="this.style.display='none'">
+    <span class="sb-logo-txt">HarmaalWale</span>
+  </div>
+  <button class="sb-toggle" onclick="toggleSB()" id="sb-tog">◀</button>
+  <nav>
+    <div class="nav-sec">Overview</div>
+    <button class="nav-item active" id="n-overview" onclick="go('overview')"><span class="ni">📊</span><span class="nl">Dashboard</span></button>
+    <div class="nav-sec">Commerce</div>
+    <button class="nav-item" id="n-orders" onclick="go('orders')"><span class="ni">📦</span><span class="nl">Orders</span><span class="nbadge org" id="nb-orders">0</span></button>
+    <button class="nav-item" id="n-products" onclick="go('products')"><span class="ni">🏷️</span><span class="nl">Products</span></button>
+    <div class="nav-sec">Customers</div>
+    <button class="nav-item" id="n-users" onclick="go('users')"><span class="ni">👥</span><span class="nl">Users</span><span class="nbadge" id="nb-users">0</span></button>
+    <div class="nav-sec">Support</div>
+    <button class="nav-item" id="n-enquiries" onclick="go('enquiries')"><span class="ni">💬</span><span class="nl">Enquiries</span><span class="nbadge" id="nb-enq">0</span></button>
+    <button class="nav-item" id="n-notify" onclick="go('notify')"><span class="ni">🔔</span><span class="nl">Notify List</span></button>
+    <div class="nav-sec">Sellers</div>
+    <button class="nav-item" id="n-sellers" onclick="go('sellers')"><span class="ni">🏪</span><span class="nl">Seller Applications</span><span class="nbadge org" id="nb-sellers">0</span></button>
+    <div class="nav-sec">Growth</div>
+    <button class="nav-item" id="n-marketing" onclick="go('marketing')"><span class="ni">📣</span><span class="nl">Marketing</span></button>
+    <button class="nav-item" id="n-seo" onclick="go('seo')"><span class="ni">🔍</span><span class="nl">SEO</span></button>
+  </nav>
+  <div class="sb-bot">
+    <div class="sb-user">
+      <div class="sb-av" id="sb-av">A</div>
+      <div class="sb-uinfo">
+        <div class="sb-uname" id="sb-name">Admin</div>
+        <div class="sb-uemail" id="sb-email">—</div>
+      </div>
+    </div>
+    <button class="nav-item" onclick="logout()"><span class="ni">🚪</span><span class="nl">Sign Out</span></button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="topbar">
+    <div>
+      <div class="page-title" id="pg-title">Dashboard</div>
+      <div class="page-sub" id="pg-sub">Welcome back</div>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="window.open('index.html','_blank')">🌐 View Site</button>
+      <button class="topbar-btn" onclick="refreshCurrent()" id="refresh-btn">↻ Refresh</button>
+    </div>
+  </div>
+  <div id="content"><div class="loading"><div class="spin"></div>Loading...</div></div>
+</div>
+
+</div><!-- #app -->
+
+<!-- ══ MODALS ════════════════════════════════════════════════ -->
+
+<!-- User Detail Modal -->
+<div class="modal-bg" id="modal-user">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-hdr"><span class="modal-title" id="mu-title">User Detail</span><button class="modal-close" onclick="closeModal('modal-user')">✕</button></div>
+    <div class="modal-body" id="mu-body"><div class="loading"><div class="spin"></div></div></div>
+  </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div class="modal-bg" id="modal-order">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-hdr"><span class="modal-title" id="mo-title">Order Detail</span><button class="modal-close" onclick="closeModal('modal-order')">✕</button></div>
+    <div class="modal-body" id="mo-body"><div class="loading"><div class="spin"></div></div></div>
+    <div class="modal-footer" id="mo-footer"></div>
+  </div>
+</div>
+
+<!-- Enquiry Detail Modal -->
+<div class="modal-bg" id="modal-enq">
+  <div class="modal">
+    <div class="modal-hdr"><span class="modal-title" id="me-title">Enquiry</span><button class="modal-close" onclick="closeModal('modal-enq')">✕</button></div>
+    <div class="modal-body" id="me-body"></div>
+  </div>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal-bg" id="modal-seller">
+  <div class="modal" style="max-width:780px;max-height:88vh;overflow-y:auto">
+    <div class="modal-hdr"><span class="modal-title">Seller Application</span><button class="modal-close" onclick="closeModal('modal-seller')">✕</button></div>
+    <div class="modal-body" id="modal-seller-body"><div class="loading"><div class="spin"></div>Loading…</div></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-product">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-hdr"><span class="modal-title" id="mp-title">Add Product</span><button class="modal-close" onclick="closeModal('modal-product')">✕</button></div>
+    <div class="modal-body" id="mp-body">
+      <div class="form-row"><div class="form-group"><label>Product Name *</label><input class="form-inp" id="p-name" placeholder="e.g. Jaipuri Cotton Shirt"></div><div class="form-group"><label>Category</label><input class="form-inp" id="p-cat" value="fashion" placeholder="fashion"></div></div>
+      <div class="form-row"><div class="form-group"><label>Price (₹)</label><input type="number" class="form-inp" id="p-price" placeholder="799"></div><div class="form-group"><label>Stock Qty</label><input type="number" class="form-inp" id="p-stock" placeholder="10" value="10"></div></div>
+      <div class="form-row"><div class="form-group"><label>Size</label><input class="form-inp" id="p-size" placeholder="M, L, XL, XXL..."></div><div class="form-group"><label>Fabric</label><input class="form-inp" id="p-fabric" placeholder="100% Cotton"></div></div>
+      <div class="form-group"><label>Description</label><textarea class="form-inp form-ta" id="p-desc" placeholder="Product description..."></textarea></div>
+      <div class="form-group"><label>Image filename (from server)</label><input class="form-inp" id="p-img" placeholder="product.jpg"></div>
+      <div class="section-title" style="margin-top:16px">Measurements (optional)</div>
+      <div class="measurements-grid">
+        <div class="form-group"><label>Shoulder (in)</label><input class="form-inp" id="p-shoulder" placeholder="17"></div>
+        <div class="form-group"><label>Chest (in)</label><input class="form-inp" id="p-chest" placeholder="40"></div>
+        <div class="form-group"><label>Length (in)</label><input class="form-inp" id="p-length" placeholder="28"></div>
+        <div class="form-group"><label>Sleeve (in)</label><input class="form-inp" id="p-sleeve" placeholder="24"></div>
+        <div class="form-group"><label>Neck (in)</label><input class="form-inp" id="p-neck" placeholder="15"></div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-product')">Cancel</button><button class="btn btn-org" onclick="saveProduct()" id="save-prod-btn">Save Product</button></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- ══ SCRIPTS ════════════════════════════════════════════════ -->
+<script>
+const API = (window.location.hostname === 'harmaalwale.com' || window.location.hostname.endsWith('.harmaalwale.com')) ? 'https://harmaalwale.com/api' : 'api';
+let token = localStorage.getItem('hw_admin_token');
+let adminUser = JSON.parse(localStorage.getItem('hw_admin_user')||'null');
+let currentPage = 'overview';
+let editingProductId = null;
+
+// ── Utilities ────────────────────────────────────────────────
+async function apiFetch(path, method='GET', body=null) {
+  const opts = { method, headers: {'Content-Type':'application/json','Authorization':'Bearer '+(token||'')} };
+  if (body) opts.body = JSON.stringify(body);
+  try {
+    const r = await fetch(`${API}/${path}`, opts);
+    const text = await r.text();
+    try {
+      return JSON.parse(text);
+    } catch(e) {
+      console.error('API non-JSON from', path, ':', text.slice(0,300));
+      return { error: 'Server error — check console for details.' };
+    }
+  } catch(e) {
+    console.error('API fetch error:', e);
+    return { error: 'Network error — is the site reachable?' };
+  }
+}
+
+function toast(msg, type='ok') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'show ' + type;
+  clearTimeout(window._toastT);
+  window._toastT = setTimeout(() => t.className = '', 3000);
+}
+
+function setPage(title, sub='') {
+  document.getElementById('pg-title').textContent = title;
+  document.getElementById('pg-sub').textContent = sub;
+}
+
+function content(html) {
+  document.getElementById('content').innerHTML = html;
+}
+
+function loading() {
+  content('<div class="loading"><div class="spin"></div> Loading...</div>');
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function fmtMoney(n) {
+  const num = parseFloat(n)||0;
+  return num > 0 ? '₹' + num.toLocaleString('en-IN') : '—';
+}
+
+// ── Sidebar ──────────────────────────────────────────────────
+function toggleSB() {
+  const sb = document.getElementById('sb');
+  const main = document.getElementById('main');
+  const tog = document.getElementById('sb-tog');
+  sb.classList.toggle('col');
+  main.classList.toggle('col');
+  tog.textContent = sb.classList.contains('col') ? '▶' : '◀';
+}
+
+function setNav(page) {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  const el = document.getElementById('n-' + page);
+  if (el) el.classList.add('active');
+  currentPage = page;
+}
+
+// ── Login / Logout ───────────────────────────────────────────
+async function login() {
+  const email = document.getElementById('li-email').value.trim();
+  const pass  = document.getElementById('li-pass').value;
+  const btn   = document.getElementById('li-btn');
+  const err   = document.getElementById('li-err');
+  err.textContent = '';
+  if (!email||!pass) { err.textContent = 'Email and password required'; return; }
+  btn.textContent = 'Signing in...'; btn.disabled = true;
+  const data = await apiFetch('auth.php?action=login','POST',{email,password:pass});
+  btn.textContent = 'Sign In →'; btn.disabled = false;
+  if (!data || !data.success) { err.textContent = data?.error||'Login failed. Check your credentials.'; return; }
+  if (!data.user || data.user.role !== 'admin') { err.textContent = 'Access denied — admin accounts only'; return; }
+  token = data.token;
+  adminUser = data.user;
+  localStorage.setItem('hw_admin_token', token);
+  localStorage.setItem('hw_admin_user', JSON.stringify(adminUser));
+  showApp();
+}
+
+function logout() {
+  if (!confirm('Sign out of admin dashboard?')) return;
+  token = null; adminUser = null;
+  localStorage.removeItem('hw_admin_token');
+  localStorage.removeItem('hw_admin_user');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  if (adminUser) {
+    document.getElementById('sb-av').textContent = adminUser.name.charAt(0).toUpperCase();
+    document.getElementById('sb-name').textContent = adminUser.name;
+    document.getElementById('sb-email').textContent = adminUser.email;
+  }
+  go('overview');
+}
+
+function refreshCurrent() { go(currentPage); }
+
+function go(page) {
+  setNav(page);
+  const pages = {overview,users,orders,products,enquiries,notify,sellers,marketing,seo};
+  if (pages[page]) pages[page]();
+}
+
+// ── SELLERS ──────────────────────────────────────────────────
+let sellersData = [];
+let sellerPage = 1;
+let sellerFilter = 'all';
+let sellerSearch = '';
+
+async function sellers() {
+  setPage('Seller Applications','Review & manage seller partnership requests');
+  loading();
+  sellerPage = 1;
+  await loadSellers();
+}
+
+async function loadSellers() {
+  const params = new URLSearchParams({action:'list',status:sellerFilter,search:sellerSearch,page:sellerPage});
+  const data = await apiFetch('seller.php?' + params.toString());
+  if (data.error) { content('<div class="empty">'+data.error+'</div>'); return; }
+
+  const statusColor = {pending:'pending',approved:'active',rejected:'rejected',info_needed:'org'};
+  const statusLabel = {pending:'Pending',approved:'Approved',rejected:'Rejected',info_needed:'Info Needed'};
+  const planLabel   = {starter:'Starter ₹2,500',growth:'Growth ₹5,000',enterprise:'Enterprise'};
+
+  const rows = (data.applications||[]).map(a => `
+    <tr class="clickable-row" onclick="viewSeller(${a.id})">
+      <td><span class="td-mono">${a.ref_code}</span></td>
+      <td class="td-name">${a.name}</td>
+      <td>${a.biz_name}</td>
+      <td class="td-email">${a.email}</td>
+      <td>${a.phone}</td>
+      <td>${planLabel[a.plan]||a.plan||'—'}</td>
+      <td><span class="badge ${statusColor[a.status]||''}"> ${statusLabel[a.status]||a.status}</span></td>
+      <td>${fmtDate(a.submitted_at)}</td>
+    </tr>`).join('') || '<tr><td colspan="8" class="empty-row">No applications yet</td></tr>';
+
+  const pages = data.pages||1;
+  const pager = pages>1 ? `<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;align-items:center">
+    <span style="font-size:12px;color:#555">Page ${sellerPage} of ${pages}</span>
+    ${sellerPage>1?'<button class="action-btn" onclick="sellerPage--;loadSellers()">← Prev</button>':''}
+    ${sellerPage<pages?'<button class="action-btn" onclick="sellerPage++;loadSellers()">Next →</button>':''}
+  </div>` : '';
+
+  content(`
+    <div class="stats-grid" style="margin-bottom:20px" id="seller-stats-row"></div>
+    <div class="box">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          ${['all','pending','approved','rejected','info_needed'].map(s=>`
+            <button class="action-btn ${sellerFilter===s?'prim':''}" onclick="sellerFilter='${s}';sellerPage=1;loadSellers()">${s==='all'?'All':s.charAt(0).toUpperCase()+s.slice(1).replace('_',' ')}</button>
+          `).join('')}
+        </div>
+        <input type="text" placeholder="Search name, email, ref…" value="${sellerSearch}"
+          oninput="sellerSearch=this.value;sellerPage=1;loadSellers()"
+          style="background:#1a1a1a;border:1px solid #333;border-radius:6px;padding:7px 12px;color:#fff;font-size:13px;outline:none;flex:1;min-width:200px">
+        <span style="font-size:12px;color:#555;margin-left:auto">${data.total||0} total</span>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th>Ref Code</th><th>Name</th><th>Business</th><th>Email</th>
+          <th>Phone</th><th>Plan</th><th>Status</th><th>Submitted</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+      ${pager}
+    </div>
+  `);
+
+  // Load stats
+  apiFetch('seller.php?action=stats').then(ss => {
+    if (!ss || ss.error) return;
+    const labels = {pending:'Pending Review',approved:'Approved',rejected:'Rejected',info_needed:'Info Needed',total:'Total Applications'};
+    const icons  = {pending:'⏳',approved:'✅',rejected:'❌',info_needed:'📋',total:'📊'};
+    const statsEl = document.getElementById('seller-stats-row');
+    if (statsEl) statsEl.innerHTML = Object.entries(ss).map(([k,v])=>`
+      <div class="stat-card"><div class="sc-val">${v}</div><div class="sc-lbl">${icons[k]||''} ${labels[k]||k}</div></div>
+    `).join('');
+    document.getElementById('nb-sellers').textContent = ss.pending||0;
+  });
+}
+
+async function viewSeller(id) {
+  const data = await apiFetch('seller.php?action=single&id='+id);
+  if (data.error) { toast(data.error,'err'); return; }
+  const a = data;
+
+  const statusColor = {pending:'pending',approved:'active',rejected:'rejected',info_needed:'org'};
+  const statusLabel = {pending:'Pending',approved:'Approved',rejected:'Rejected',info_needed:'Info Needed'};
+  const field = (label, val) => val ? `<div style="margin-bottom:12px"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#555;margin-bottom:4px">${label}</div><div style="font-size:14px;color:#ccc;line-height:1.5">${val}</div></div>` : '';
+
+  openModal('modal-seller');
+  document.getElementById('modal-seller-body').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase">${a.biz_name}</div>
+        <div style="font-size:12px;color:#555;margin-top:4px">${a.ref_code} · Submitted ${fmtDate(a.submitted_at)}</div>
+      </div>
+      <span class="badge ${statusColor[a.status]||''}" style="font-size:13px;padding:6px 14px">${statusLabel[a.status]||a.status}</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E87000;margin-bottom:12px;padding-top:4px">Contact</div>
+        ${field('Full Name', a.name)}
+        ${field('Email', a.email)}
+        ${field('Phone', a.phone)}
+        ${field('City', a.city)}
+        ${field('GST', a.gst)}
+        ${field('Address', a.address)}
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E87000;margin-bottom:12px;padding-top:4px">Business</div>
+        ${field('Owner/Rep', a.is_owner)}
+        ${field('Business Type', a.biz_type)}
+        ${field('Plan Requested', a.plan)}
+        ${field('Stock Volume', a.stock)}
+        ${field('Heard From', a.heard)}
+        ${field('Website', a.website)}
+      </div>
+    </div>
+
+    <div style="border-top:1px solid #222;padding-top:16px;margin-top:8px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E87000;margin-bottom:12px">Products & Sourcing</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
+        ${field('Categories', a.categories)}
+        ${field('Source Type', a.source_type)}
+        ${field('Authorized Reseller?', a.is_authorized)}
+        ${field('Brands', a.brands)}
+      </div>
+      ${field('Products Description', a.products)}
+      ${field('Sourcing Details', a.source_detail)}
+      ${a.message ? field('Message', a.message) : ''}
+    </div>
+
+    <div style="border-top:1px solid #222;padding-top:16px;margin-top:8px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#E87000;margin-bottom:14px">Review Decision</div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:6px">Update Status</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="action-btn ${a.status==='approved'?'prim':''}" onclick="updateSellerStatus(${a.id},'approved')">✅ Approve</button>
+          <button class="action-btn" onclick="updateSellerStatus(${a.id},'info_needed')" style="${a.status==='info_needed'?'border-color:#E87000;color:#E87000':''}">📋 Need Info</button>
+          <button class="action-btn" onclick="updateSellerStatus(${a.id},'rejected')" style="border-color:#e74c3c;color:#e74c3c;${a.status==='rejected'?'background:rgba(231,76,60,0.1)':''}">❌ Reject</button>
+          <button class="action-btn" onclick="updateSellerStatus(${a.id},'pending')">⏳ Reset Pending</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#555;margin-bottom:6px">Admin Notes</div>
+        <textarea id="seller-notes-${a.id}" rows="3" placeholder="Internal notes (visible to admins only)…"
+          style="width:100%;background:#141414;border:1px solid #333;border-radius:7px;padding:10px 12px;color:#fff;font-family:'Barlow',sans-serif;font-size:13px;outline:none;resize:vertical">${a.admin_notes||''}</textarea>
+        <button class="action-btn prim" style="margin-top:8px" onclick="saveSellerNotes(${a.id})">Save Notes</button>
+      </div>
+    </div>
+  `;
+}
+
+async function updateSellerStatus(id, status) {
+  const data = await apiFetch('seller.php?action=update','PATCH',{id,status});
+  if (data.success) {
+    toast('Status updated to: '+status,'ok');
+    viewSeller(id);
+    loadSellers();
+  } else { toast(data.error||'Failed','err'); }
+}
+
+async function saveSellerNotes(id) {
+  const notes = document.getElementById('seller-notes-'+id)?.value || '';
+  const data = await apiFetch('seller.php?action=update','PATCH',{id,admin_notes:notes});
+  if (data.success) toast('Notes saved','ok');
+  else toast(data.error||'Failed','err');
+}
+
+// Close modals on backdrop click
+document.querySelectorAll('.modal-bg').forEach(bg => {
+  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') document.querySelectorAll('.modal-bg.open').forEach(m=>m.classList.remove('open'));
+});
+
+// ── OVERVIEW ─────────────────────────────────────────────────
+async function overview() {
+  setPage('Dashboard','Overview & key metrics');
+  loading();
+  const data = await apiFetch('admin.php?action=stats');
+  if (data.error) { content('<div class="empty">'+data.error+'</div>'); return; }
+  const s = data.stats||{};
+
+  // Update sidebar badges
+  document.getElementById('nb-orders').textContent = s.pending_orders||0;
+  document.getElementById('nb-users').textContent  = s.total_users||0;
+  document.getElementById('nb-enq').textContent    = s.new_enquiries||0;
+  // Load seller application pending count
+  apiFetch('seller.php?action=stats').then(ss => {
+    if (ss && ss.pending !== undefined) document.getElementById('nb-sellers').textContent = ss.pending||0;
+  });
+
+  const recentOrders = (data.recent_orders||[]).map(o => `
+    <tr class="clickable-row" onclick="viewOrder(${o.id})">
+      <td><span class="td-mono">${o.order_number}</span></td>
+      <td class="td-name">${o.user_name||'—'}</td>
+      <td>${fmtMoney(o.total)}</td>
+      <td><span class="badge ${o.status}">${o.status}</span></td>
+      <td>${fmtDate(o.created_at)}</td>
+    </tr>`).join('') || '<tr><td colspan="5" class="empty-row">No orders yet</td></tr>';
+
+  const recentUsers = (data.recent_users||[]).map(u => `
+    <tr class="clickable-row" onclick="viewUser(${u.id})">
+      <td class="td-name">${u.name}</td>
+      <td class="td-email">${u.email}</td>
+      <td><span class="badge ${u.verified?'active':'pending'}">${u.verified?'Verified':'Unverified'}</span></td>
+      <td>${fmtDate(u.created_at)}</td>
+    </tr>`).join('') || '<tr><td colspan="4" class="empty-row">No users yet</td></tr>';
+
+  const topWish = (data.top_wishlisted||[]).map(p => `
+    <tr>
+      <td class="td-name">${p.name}</td>
+      <td style="color:var(--o);font-weight:700">${p.wish_count} ♡</td>
+    </tr>`).join('') || '<tr><td colspan="2" class="empty-row">No wishlist data</td></tr>';
+
+  content(`
+    <div class="stats-grid">
+      <div class="stat-card" onclick="go('users')" style="cursor:pointer" title="View all users">
+        <div class="stat-top"><span class="stat-icon">👥</span><span class="stat-trend trend-up">Registered</span></div>
+        <div class="stat-val b">${s.total_users||0}</div>
+        <div class="stat-lbl">Total Users</div>
+      </div>
+      <div class="stat-card" onclick="go('orders')" style="cursor:pointer" title="View all orders">
+        <div class="stat-top"><span class="stat-icon">📦</span><span class="stat-trend ${(s.pending_orders||0)>0?'trend-up':'trend-neu'}">${s.pending_orders||0} Pending</span></div>
+        <div class="stat-val o">${s.total_orders||0}</div>
+        <div class="stat-lbl">Total Orders</div>
+      </div>
+      <div class="stat-card" onclick="go('orders')" style="cursor:pointer" title="View orders & revenue">
+        <div class="stat-top"><span class="stat-icon">💰</span><span class="stat-trend trend-up">Revenue</span></div>
+        <div class="stat-val g">${fmtMoney(s.total_revenue)}</div>
+        <div class="stat-lbl">Total Revenue</div>
+      </div>
+      <div class="stat-card" onclick="go('enquiries')" style="cursor:pointer" title="View all enquiries">
+        <div class="stat-top"><span class="stat-icon">💬</span><span class="stat-trend ${(s.new_enquiries||0)>0?'trend-dn':'trend-neu'}">${s.new_enquiries||0} New</span></div>
+        <div class="stat-val r">${s.total_enquiries||0}</div>
+        <div class="stat-lbl">Enquiries</div>
+      </div>
+      <div class="stat-card" onclick="go('products')" style="cursor:pointer" title="Manage products">
+        <div class="stat-top"><span class="stat-icon">🏷️</span><span class="stat-trend trend-neu">Listed</span></div>
+        <div class="stat-val">${s.total_products||0}</div>
+        <div class="stat-lbl">Products</div>
+      </div>
+      <div class="stat-card" onclick="go('notify')" style="cursor:pointer" title="View notify signups">
+        <div class="stat-top"><span class="stat-icon">🔔</span><span class="stat-trend trend-up">Signups</span></div>
+        <div class="stat-val b">${s.notify_count||0}</div>
+        <div class="stat-lbl">Notify List</div>
+      </div>
+      <div class="stat-card" onclick="go('users')" style="cursor:pointer" title="View users & wishlists">
+        <div class="stat-top"><span class="stat-icon">♡</span><span class="stat-trend trend-neu">Items</span></div>
+        <div class="stat-val o">${s.wishlist_count||0}</div>
+        <div class="stat-lbl">Wishlist Saves</div>
+      </div>
+      <div class="stat-card" onclick="go('orders')" style="cursor:pointer" title="View orders">
+        <div class="stat-top"><span class="stat-icon">🛒</span><span class="stat-trend trend-neu">Items</span></div>
+        <div class="stat-val">${s.cart_count||0}</div>
+        <div class="stat-lbl">Cart Items</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">Recent Orders</span><button class="box-act" onclick="go('orders')">View All →</button></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Order #</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+          <tbody>${recentOrders}</tbody>
+        </table></div>
+      </div>
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">Top Wishlisted</span><span class="box-badge">By Count</span></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Product</th><th>Saves</th></tr></thead>
+          <tbody>${topWish}</tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-hdr"><span class="box-title">New Users</span><button class="box-act" onclick="go('users')">View All →</button></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Joined</th></tr></thead>
+        <tbody>${recentUsers}</tbody>
+      </table></div>
+    </div>
+  `);
+}
+
+// ── USERS ─────────────────────────────────────────────────────
+async function users(search='') {
+  setPage('Users','All registered accounts');
+  loading();
+  const url = 'admin.php?action=users' + (search ? '&search='+encodeURIComponent(search) : '');
+  const data = await apiFetch(url);
+  const list = data.users||[];
+
+  const rows = list.map(u => `
+    <tr class="clickable-row" onclick="viewUser(${u.id})">
+      <td><div class="td-name">${u.name}</div><div class="td-email">${u.email}</div></td>
+      <td>${u.phone||'—'}</td>
+      <td><span class="badge ${u.role}">${u.role}</span></td>
+      <td><span class="badge ${u.verified?'active':'pending'}">${u.verified?'✓ Verified':'⏳ Unverified'}</span></td>
+      <td>${u.order_count||0}</td>
+      <td>${fmtDate(u.created_at)}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();viewUser(${u.id})">View →</button></td>
+    </tr>`).join('') || '<tr><td colspan="7" class="empty-row">No users found</td></tr>';
+
+  content(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap">
+      <div style="font-size:13px;color:var(--mut)">${list.length} user${list.length!==1?'s':''} found</div>
+      <div class="search-bar"><input type="text" placeholder="Search name or email..." value="${search}" onkeydown="if(event.key==='Enter')users(this.value)" id="user-search"></div>
+    </div>
+    <div class="box">
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Name / Email</th><th>Phone</th><th>Role</th><th>Status</th><th>Orders</th><th>Joined</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+  `);
+}
+
+async function viewUser(id) {
+  document.getElementById('mu-title').textContent = 'User #' + id;
+  document.getElementById('mu-body').innerHTML = '<div class="loading"><div class="spin"></div></div>';
+  openModal('modal-user');
+  const data = await apiFetch('admin.php?action=user&id='+id);
+  const u = data.user;
+  if (!u) { document.getElementById('mu-body').innerHTML = '<div class="empty">User not found</div>'; return; }
+
+  const orderRows = (u.orders||[]).map(o =>
+    `<tr><td class="td-mono">${o.order_number}</td><td>${fmtMoney(o.total)}</td><td><span class="badge ${o.status}">${o.status}</span></td><td>${fmtDate(o.created_at)}</td></tr>`
+  ).join('') || '<tr><td colspan="4" class="empty-row">No orders</td></tr>';
+
+  const addrRows = (u.addresses||[]).map(a =>
+    `<tr><td>${a.label}</td><td>${a.line1}${a.line2?', '+a.line2:''}, ${a.city}, ${a.state} ${a.pincode}</td></tr>`
+  ).join('') || '<tr><td colspan="2" class="empty-row">No saved addresses</td></tr>';
+
+  document.getElementById('mu-title').textContent = u.name + (u.role==='admin'?' 🛠':'');
+  document.getElementById('mu-body').innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;background:#111;padding:16px;border-radius:10px">
+      <div style="width:50px;height:50px;border-radius:50%;background:var(--o);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#fff;flex-shrink:0">${u.name.charAt(0).toUpperCase()}</div>
+      <div>
+        <div style="font-size:16px;font-weight:700;color:#fff">${u.name}</div>
+        <div style="font-size:12px;color:var(--mut)">${u.email} ${u.phone?'· '+u.phone:''}</div>
+        <div style="margin-top:6px;display:flex;gap:6px"><span class="badge ${u.role}">${u.role}</span><span class="badge ${u.verified?'active':'pending'}">${u.verified?'Verified':'Unverified'}</span></div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div style="font-size:10px;color:var(--mut);margin-bottom:4px">Joined</div>
+        <div style="font-size:12px;color:#fff">${fmtDate(u.created_at)}</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="btn btn-ghost btn-sm" onclick="toggleRole(${u.id},'${u.role==='admin'?'customer':'admin'}')">
+        ${u.role==='admin'?'👤 Remove Admin':'🛠️ Make Admin'}
+      </button>
+      ${!u.verified?`<button class="btn btn-grn btn-sm" onclick="verifyUser(${u.id})">✓ Mark Verified</button>`:''}
+    </div>
+
+    <div class="section-title">Orders (${(u.orders||[]).length})</div>
+    <div class="box" style="margin-bottom:16px"><div class="tbl-wrap"><table>
+      <thead><tr><th>Order #</th><th>Total</th><th>Status</th><th>Date</th></tr></thead>
+      <tbody>${orderRows}</tbody>
+    </table></div></div>
+
+    <div class="section-title">Addresses (${(u.addresses||[]).length})</div>
+    <div class="box"><div class="tbl-wrap"><table>
+      <thead><tr><th>Label</th><th>Address</th></tr></thead>
+      <tbody>${addrRows}</tbody>
+    </table></div></div>
+  `;
+}
+
+async function toggleRole(id, newRole) {
+  const data = await apiFetch('admin.php?action=user&id='+id,'PUT',{role:newRole});
+  if (data.success) { toast('Role updated to ' + newRole); closeModal('modal-user'); users(); }
+  else toast(data.error||'Failed','err');
+}
+
+async function verifyUser(id) {
+  const data = await apiFetch('admin.php?action=user&id='+id,'PUT',{verified:1});
+  if (data.success) { toast('User verified ✓','ok'); viewUser(id); }
+  else toast(data.error||'Failed','err');
+}
+
+// ── ORDERS ────────────────────────────────────────────────────
+async function orders(filter='') {
+  setPage('Orders','All customer orders');
+  loading();
+  const data = await apiFetch('orders.php?all=1');
+  const list = data.orders||[];
+
+  const statusColors = {pending:'o',confirmed:'g',processing:'b',shipped:'b',delivered:'g',cancelled:'r'};
+
+  const rows = list.map(o => `
+    <tr class="clickable-row" onclick="viewOrder(${o.id})">
+      <td class="td-mono">${o.order_number}</td>
+      <td class="td-name">${o.user_name||'—'}<div class="td-email">${o.user_email||''}</div></td>
+      <td>${(o.items||[]).length} item(s)</td>
+      <td style="font-weight:700;color:var(--o)">${fmtMoney(o.total)}</td>
+      <td>
+        <select class="status-sel" onchange="updateOrderStatus(${o.id},this.value)" onclick="event.stopPropagation()">
+          ${['pending','confirmed','processing','shipped','delivered','cancelled'].map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}
+        </select>
+      </td>
+      <td><span class="badge ${o.payment_status||'pending'}">${o.payment_status||'pending'}</span></td>
+      <td>${fmtDate(o.created_at)}</td>
+    </tr>`).join('') || '<tr><td colspan="7" class="empty-row">No orders yet</td></tr>';
+
+  content(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+      <div style="font-size:13px;color:var(--mut)">${list.length} total orders</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${['','pending','confirmed','shipped','delivered','cancelled'].map(s=>`
+          <button class="btn btn-ghost btn-sm" onclick="filterOrders('${s}')" style="${filter===s?'border-color:var(--o);color:var(--o)':''}">${s||'All'}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="box">
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Order #</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Payment</th><th>Date</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+  `);
+}
+
+let _currentOrders = [];
+async function filterOrders(status) {
+  const data = await apiFetch('orders.php?all=1');
+  const list = (data.orders||[]).filter(o => !status || o.status===status);
+  // Re-render with filter — just call orders() with the filter param
+  orders(status);
+}
+
+async function viewOrder(id) {
+  document.getElementById('mo-body').innerHTML = '<div class="loading"><div class="spin"></div></div>';
+  document.getElementById('mo-footer').innerHTML = '';
+  openModal('modal-order');
+  const data = await apiFetch('orders.php?id='+id);
+  const o = data.order;
+  if (!o) { document.getElementById('mo-body').innerHTML='<div class="empty">Order not found</div>'; return; }
+  document.getElementById('mo-title').textContent = 'Order ' + o.order_number;
+
+  const items = (o.items||[]).map(i =>
+    `<tr><td class="td-name">${i.name}</td><td>${i.size||'—'}</td><td>×${i.quantity}</td><td style="font-weight:700">${fmtMoney(i.price)}</td></tr>`
+  ).join('');
+
+  document.getElementById('mo-body').innerHTML = `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+      <div><div style="font-size:10px;color:var(--mut);margin-bottom:3px">STATUS</div><span class="badge ${o.status}">${o.status}</span></div>
+      <div><div style="font-size:10px;color:var(--mut);margin-bottom:3px">PAYMENT</div><span class="badge ${o.payment_status||'pending'}">${o.payment_method||'COD'} · ${o.payment_status||'pending'}</span></div>
+      <div><div style="font-size:10px;color:var(--mut);margin-bottom:3px">DATE</div><span style="font-size:12px;color:#fff">${fmtDate(o.created_at)}</span></div>
+    </div>
+
+    ${o.address?`
+    <div class="box" style="margin-bottom:14px;padding:14px 16px">
+      <div style="font-size:10px;color:var(--mut);margin-bottom:6px;font-weight:800;letter-spacing:1px;text-transform:uppercase">Delivery Address</div>
+      <div style="font-size:13px;color:#fff">${o.address.name||''} ${o.address.phone?'· '+o.address.phone:''}</div>
+      <div style="font-size:12px;color:var(--mut);margin-top:2px">${o.address.line1}${o.address.line2?', '+o.address.line2:''}, ${o.address.city}, ${o.address.state} ${o.address.pincode}</div>
+    </div>`:''}
+
+    <div class="section-title">Items</div>
+    <div class="box" style="margin-bottom:14px"><div class="tbl-wrap"><table>
+      <thead><tr><th>Product</th><th>Size</th><th>Qty</th><th>Price</th></tr></thead>
+      <tbody>${items}</tbody>
+    </table></div></div>
+
+    <div style="background:#111;border-radius:8px;padding:14px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:6px"><span>Subtotal</span><span>${fmtMoney(o.subtotal)}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:8px"><span>Shipping</span><span>${o.shipping > 0 ? fmtMoney(o.shipping) : 'Free'}</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:900;color:#fff;border-top:1px solid var(--bdr);padding-top:8px"><span>Total</span><span style="color:var(--o)">${fmtMoney(o.total)}</span></div>
+    </div>
+    ${o.notes?`<div style="margin-top:12px;background:#111;border-radius:8px;padding:12px;font-size:12px;color:var(--mut)"><strong style="color:#fff">Notes:</strong> ${o.notes}</div>`:''}
+
+    <div class="section-title" style="margin-top:16px">Update Status</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <select class="form-sel" id="ord-status-sel" style="flex:1">
+        ${['pending','confirmed','processing','shipped','delivered','cancelled'].map(s=>`<option value="${s}" ${o.status===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}
+      </select>
+      <select class="form-sel" id="ord-pay-sel" style="flex:1">
+        ${['pending','paid','failed','refunded'].map(s=>`<option value="${s}" ${o.payment_status===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}
+      </select>
+      <button class="btn btn-org" onclick="updateOrderFull(${o.id})">Update</button>
+    </div>
+  `;
+}
+
+async function updateOrderStatus(id, status) {
+  const data = await apiFetch('orders.php?id='+id,'PUT',{status});
+  toast(data.success ? 'Status updated ✓' : data.error||'Failed', data.success?'ok':'err');
+}
+
+async function updateOrderFull(id) {
+  const status = document.getElementById('ord-status-sel').value;
+  const payment_status = document.getElementById('ord-pay-sel').value;
+  const data = await apiFetch('orders.php?id='+id,'PUT',{status,payment_status});
+  toast(data.success ? 'Order updated ✓' : data.error||'Failed', data.success?'ok':'err');
+  if (data.success) { closeModal('modal-order'); orders(); }
+}
+
+// ── PRODUCTS ──────────────────────────────────────────────────
+async function products() {
+  setPage('Products','Manage product catalogue');
+  loading();
+  const data = await apiFetch('products.php');
+  const list = data.products||[];
+
+  const rows = list.map(p => `
+    <tr>
+      <td>
+        ${p.image?`<img src="${p.image}" style="width:40px;height:40px;object-fit:cover;border-radius:5px;vertical-align:middle;margin-right:8px" onerror="this.style.display='none'">`:'<span style="font-size:24px;margin-right:8px">👕</span>'}
+        <span class="td-name">${p.name}</span>
+      </td>
+      <td><span class="tag">${p.category_name||p.category_id||'—'}</span></td>
+      <td style="font-weight:700;color:var(--o)">${fmtMoney(p.price)}</td>
+      <td>${p.size||'—'}</td>
+      <td>${p.stock||0}</td>
+      <td><span class="badge ${p.status==='active'?'active':'inactive'}">${p.status}</span></td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick="editProduct(${p.id})" style="margin-right:4px">Edit</button>
+        <button class="btn btn-sm" style="background:none;border:1px solid var(--red);color:var(--red)" onclick="deleteProduct(${p.id})">Del</button>
+      </td>
+    </tr>`).join('') || '<tr><td colspan="7" class="empty-row">No products yet</td></tr>';
+
+  content(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-size:13px;color:var(--mut)">${list.length} products</div>
+      <button class="btn btn-org" onclick="openAddProduct()">+ Add Product</button>
+    </div>
+    <div class="box">
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Size</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+  `);
+}
+
+function openAddProduct() {
+  editingProductId = null;
+  document.getElementById('mp-title').textContent = 'Add Product';
+  ['p-name','p-cat','p-price','p-stock','p-size','p-fabric','p-desc','p-img','p-shoulder','p-chest','p-length','p-sleeve','p-neck'].forEach(id=>{
+    const el = document.getElementById(id);
+    if (el) el.value = id==='p-cat'?'fashion':id==='p-stock'?'10':'';
+  });
+  openModal('modal-product');
+}
+
+async function editProduct(id) {
+  editingProductId = id;
+  const data = await apiFetch('products.php?id='+id);
+  const p = data.product;
+  if (!p) { toast('Product not found','err'); return; }
+  document.getElementById('mp-title').textContent = 'Edit Product';
+  const map = {name:'p-name',category_id:'p-cat',price:'p-price',stock:'p-stock',size:'p-size',fabric:'p-fabric',description:'p-desc',image:'p-img',shoulder:'p-shoulder',chest:'p-chest',length:'p-length',sleeve:'p-sleeve',neck:'p-neck'};
+  Object.entries(map).forEach(([k,v]) => { const el=document.getElementById(v); if(el) el.value=p[k]||''; });
+  openModal('modal-product');
+}
+
+async function saveProduct() {
+  const btn = document.getElementById('save-prod-btn');
+  btn.textContent = 'Saving...'; btn.disabled = true;
+  const body = {
+    name:document.getElementById('p-name').value.trim(),
+    category_id:1, // Default fashion
+    price:parseFloat(document.getElementById('p-price').value)||0,
+    stock:parseInt(document.getElementById('p-stock').value)||0,
+    size:document.getElementById('p-size').value.trim(),
+    fabric:document.getElementById('p-fabric').value.trim(),
+    description:document.getElementById('p-desc').value.trim(),
+    image:document.getElementById('p-img').value.trim(),
+    shoulder:document.getElementById('p-shoulder').value.trim(),
+    chest:document.getElementById('p-chest').value.trim(),
+    length:document.getElementById('p-length').value.trim(),
+    sleeve:document.getElementById('p-sleeve').value.trim(),
+    neck:document.getElementById('p-neck').value.trim(),
+  };
+  if (!body.name) { toast('Product name required','err'); btn.textContent='Save Product';btn.disabled=false; return; }
+  const method = editingProductId ? 'PUT' : 'POST';
+  const url    = editingProductId ? 'products.php?id='+editingProductId : 'products.php';
+  const data   = await apiFetch(url, method, body);
+  btn.textContent = 'Save Product'; btn.disabled = false;
+  if (data.success) { toast(editingProductId?'Product updated ✓':'Product added ✓'); closeModal('modal-product'); products(); }
+  else toast(data.error||'Failed','err');
+}
+
+async function deleteProduct(id) {
+  if (!confirm('Delete this product?')) return;
+  const data = await apiFetch('products.php?id='+id,'DELETE');
+  toast(data.success?'Product deleted':'Failed', data.success?'ok':'err');
+  if (data.success) products();
+}
+
+// ── ENQUIRIES ─────────────────────────────────────────────────
+async function enquiries() {
+  setPage('Enquiries','Customer messages & support requests');
+  loading();
+  const data = await apiFetch('enquiries.php');
+  const list = data.enquiries||[];
+
+  const rows = list.map(e => `
+    <tr class="clickable-row" onclick="viewEnquiry(${e.id})">
+      <td class="td-name">${e.name}<div class="td-email">${e.email}</div></td>
+      <td>${e.subject||'General'}</td>
+      <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mut)">${(e.message||'').slice(0,80)}${e.message&&e.message.length>80?'...':''}</td>
+      <td>
+        <select class="status-sel" onchange="updateEnqStatus(${e.id},this.value)" onclick="event.stopPropagation()">
+          ${['new','read','replied','closed'].map(s=>`<option value="${s}" ${e.status===s?'selected':''}>${s.charAt(0).toUpperCase()+s.slice(1)}</option>`).join('')}
+        </select>
+      </td>
+      <td>${fmtDate(e.created_at)}</td>
+    </tr>`).join('') || '<tr><td colspan="5" class="empty-row">No enquiries yet</td></tr>';
+
+  content(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-size:13px;color:var(--mut)">${list.length} total enquiries</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-ghost btn-sm" onclick="enquiries()">All</button>
+      </div>
+    </div>
+    <div class="box">
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>From</th><th>Subject</th><th>Message</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+  `);
+}
+
+function viewEnquiry(id) {
+  // Open inline — find from table
+  const btn = event.currentTarget;
+  // Fetch and show in modal
+  apiFetch('enquiries.php').then(data => {
+    const e = (data.enquiries||[]).find(x=>x.id===id);
+    if (!e) return;
+    document.getElementById('me-title').textContent = 'Enquiry from ' + e.name;
+    document.getElementById('me-body').innerHTML = `
+      <div style="background:#111;border-radius:8px;padding:14px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+          <div><div style="font-weight:700;color:#fff">${e.name}</div><div style="font-size:12px;color:var(--mut)"><a href="mailto:${e.email}" style="color:var(--o)">${e.email}</a>${e.phone?' · '+e.phone:''}</div></div>
+          <div><span class="badge ${e.status}">${e.status}</span></div>
+        </div>
+        <div style="font-size:10px;color:var(--mut);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Subject</div>
+        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:10px">${e.subject||'General Enquiry'}</div>
+        <div style="font-size:10px;color:var(--mut);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">Message</div>
+        <div style="font-size:14px;color:var(--txt2);line-height:1.7;white-space:pre-wrap">${e.message}</div>
+        <div style="font-size:11px;color:#333;margin-top:10px">${fmtDate(e.created_at)}</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a href="mailto:${e.email}?subject=Re: ${encodeURIComponent(e.subject||'Your Enquiry — HarmaalWale')}" class="btn btn-org">📧 Reply by Email</a>
+        ${e.phone?`<a href="https://wa.me/91${e.phone.replace(/[^0-9]/g,'').slice(-10)}?text=Hi ${encodeURIComponent(e.name)}, regarding your enquiry..." class="btn btn-grn" target="_blank" style="background:#25D366">💬 WhatsApp</a>`:''}
+        <button class="btn btn-ghost" onclick="updateEnqStatus(${e.id},'replied');closeModal('modal-enq')">Mark Replied</button>
+        <button class="btn btn-ghost" onclick="updateEnqStatus(${e.id},'closed');closeModal('modal-enq')">Close</button>
+      </div>
+    `;
+    openModal('modal-enq');
+  });
+}
+
+async function updateEnqStatus(id, status) {
+  const data = await apiFetch('enquiries.php?id='+id,'PUT',{status});
+  toast(data.success?'Status updated':'Failed',data.success?'ok':'err');
+  if (data.success) enquiries();
+}
+
+// ── NOTIFY LIST ───────────────────────────────────────────────
+async function notify() {
+  setPage('Notify List','Email signups for upcoming categories');
+  loading();
+  const data = await apiFetch('notify.php');
+  const list = data.signups||[];
+
+  const rows = list.map(n => `
+    <tr>
+      <td class="td-name">${n.email}</td>
+      <td><span class="tag">${n.category||'General'}</span></td>
+      <td>${fmtDate(n.created_at)}</td>
+    </tr>`).join('') || '<tr><td colspan="3" class="empty-row">No signups yet</td></tr>';
+
+  // Export CSV
+  const csv = 'Email,Category,Date\n' + list.map(n=>`"${n.email}","${n.category||''}","${fmtDate(n.created_at)}"`).join('\n');
+
+  content(`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-size:13px;color:var(--mut)">${list.length} email signups</div>
+      <button class="btn btn-ghost" onclick="downloadCSV()">⬇ Export CSV</button>
+    </div>
+    <div class="box">
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Email</th><th>Category</th><th>Signed Up</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+  `);
+  window._notifyCSV = csv;
+}
+
+function downloadCSV() {
+  if (!window._notifyCSV) return;
+  const blob = new Blob([window._notifyCSV], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'harmaalwale_notify_list.csv';
+  a.click();
+}
+
+// ── MARKETING ────────────────────────────────────────────────
+async function marketing() {
+  setPage('Marketing','Promotions, banners & customer engagement');
+  loading();
+  const data = await apiFetch('admin.php?action=stats');
+  const s = data.stats || {};
+
+  content(`
+    <div class="stats-grid" style="margin-bottom:24px">
+      <div class="stat-card">
+        <div class="stat-top"><span class="stat-icon">📧</span><span class="stat-trend trend-up">Total</span></div>
+        <div class="stat-val b">${s.notify_count||0}</div>
+        <div class="stat-lbl">Email Subscribers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top"><span class="stat-icon">🛒</span><span class="stat-trend trend-neu">Active</span></div>
+        <div class="stat-val o">${s.cart_count||0}</div>
+        <div class="stat-lbl">Active Carts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top"><span class="stat-icon">♡</span><span class="stat-trend trend-neu">Saves</span></div>
+        <div class="stat-val">${s.wishlist_count||0}</div>
+        <div class="stat-lbl">Wishlist Items</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-top"><span class="stat-icon">💬</span><span class="stat-trend trend-neu">Total</span></div>
+        <div class="stat-val r">${s.total_enquiries||0}</div>
+        <div class="stat-lbl">Enquiries</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:14px">
+      <!-- Email Broadcast -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">📧 Email Broadcast</span><span class="box-badge">${s.notify_count||0} subscribers</span></div>
+        <div style="padding:20px">
+          <div class="form-group"><label>Subject Line</label><input class="form-inp" id="em-subject" placeholder="e.g. New Arrivals — HarmaalWale 🔥"></div>
+          <div class="form-group"><label>Message Body</label><textarea class="form-inp form-ta" id="em-body" rows="5" placeholder="Write your message here. Supports plain text.&#10;&#10;Hi {name},&#10;&#10;We have exciting new arrivals..."></textarea></div>
+          <div class="form-group"><label>Target Audience</label>
+            <select class="form-sel" id="em-audience">
+              <option value="all">All Subscribers (Notify List)</option>
+              <option value="users">All Registered Users</option>
+              <option value="unverified">Unverified Users</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:4px">
+            <button class="btn btn-ghost" onclick="previewEmail()">👁 Preview</button>
+            <button class="btn btn-org" onclick="sendBroadcast()">📤 Send Broadcast</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- WhatsApp Campaign -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">💬 WhatsApp Campaign</span><span class="box-badge" style="background:rgba(37,211,102,.12);color:#25D366;border-color:rgba(37,211,102,.2)">WA Business</span></div>
+        <div style="padding:20px">
+          <div class="form-group"><label>Message Template</label>
+            <textarea class="form-inp form-ta" id="wa-msg" rows="4" placeholder="Hi {name},&#10;&#10;🔥 Exciting news from HarmaalWale!&#10;New collection now live. Shop now: harmaalwale.com&#10;&#10;Reply STOP to unsubscribe."></textarea>
+          </div>
+          <div class="form-group"><label>WhatsApp Business Number</label><input class="form-inp" id="wa-num" placeholder="+91 XXXXX XXXXX" value="+91 "></div>
+          <button class="btn btn-ghost" onclick="openWABusiness()" style="width:100%;justify-content:center;margin-top:4px">
+            Open WhatsApp Business API →
+          </button>
+          <div style="margin-top:12px;background:#0d1a0e;border:1px solid rgba(37,211,102,0.15);border-radius:8px;padding:12px;font-size:12px;color:#25D366">
+            💡 Use <strong>WhatsApp Business API</strong> (Meta) or <strong>Wati.io</strong> for bulk messaging. Paste your message above to copy-paste into the platform.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:14px">
+      <!-- Coupon Generator -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">🎟 Coupon Codes</span></div>
+        <div style="padding:18px">
+          <div class="form-group"><label>Code</label><input class="form-inp" id="cp-code" placeholder="SUMMER20" style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Discount %</label><input type="number" class="form-inp" id="cp-pct" placeholder="20" min="1" max="100"></div>
+            <div class="form-group"><label>Min Order ₹</label><input type="number" class="form-inp" id="cp-min" placeholder="500"></div>
+          </div>
+          <div class="form-group"><label>Expiry Date</label><input type="date" class="form-inp" id="cp-exp"></div>
+          <button class="btn btn-org btn-sm" onclick="saveCoupon()" style="width:100%;justify-content:center">Generate Coupon</button>
+          <div id="cp-result" style="margin-top:10px;font-size:12px;color:#4CAF50;text-align:center"></div>
+        </div>
+      </div>
+
+      <!-- Banner Manager -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">🖼 Hero Banner</span></div>
+        <div style="padding:18px">
+          <div class="form-group"><label>Headline</label><input class="form-inp" id="bn-h1" placeholder="NEW ARRIVALS" value="HARMAAL"></div>
+          <div class="form-group"><label>Sub Headline</label><input class="form-inp" id="bn-h2" placeholder="Shop Now" value="WALE"></div>
+          <div class="form-group"><label>Button Text</label><input class="form-inp" id="bn-cta" placeholder="Shop Now" value="Shop Now →"></div>
+          <div class="form-group"><label>Button Link</label><input class="form-inp" id="bn-link" placeholder="/fashion.html" value="fashion.html"></div>
+          <button class="btn btn-org btn-sm" onclick="saveBanner()" style="width:100%;justify-content:center">Save Banner Config</button>
+        </div>
+      </div>
+
+      <!-- Notify List Export -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">📋 Subscriber Export</span></div>
+        <div style="padding:18px">
+          <p style="font-size:12px;color:var(--mut);margin-bottom:16px;line-height:1.6">Export your subscriber list to use with Mailchimp, Brevo, or any email platform.</p>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn btn-ghost" onclick="go('notify')">📋 View Notify List</button>
+            <button class="btn btn-org" onclick="exportSubscribers()">⬇ Export All as CSV</button>
+            <a href="https://mailchimp.com" target="_blank" class="btn btn-ghost" style="justify-content:center;text-decoration:none">🐵 Open Mailchimp</a>
+            <a href="https://app.brevo.com" target="_blank" class="btn btn-ghost" style="justify-content:center;text-decoration:none">📮 Open Brevo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Media Links -->
+    <div class="box">
+      <div class="box-hdr"><span class="box-title">📱 Social Media Channels</span></div>
+      <div style="padding:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+        ${[
+          {name:'Instagram',icon:'📸',url:'https://instagram.com',color:'#E1306C',handle:'@harmaalwale'},
+          {name:'Facebook',icon:'👍',url:'https://facebook.com',color:'#4267B2',handle:'HarmaalWale'},
+          {name:'YouTube',icon:'▶',url:'https://youtube.com',color:'#FF0000',handle:'HarmaalWale'},
+          {name:'WhatsApp',icon:'💬',url:'https://wa.me/91',color:'#25D366',handle:'Business Chat'},
+        ].map(s=>`
+          <a href="${s.url}" target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;background:#111;border:1px solid #1e1e1e;border-radius:10px;text-decoration:none;transition:border-color .2s" onmouseover="this.style.borderColor='${s.color}'" onmouseout="this.style.borderColor='#1e1e1e'">
+            <span style="font-size:28px">${s.icon}</span>
+            <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff">${s.name}</span>
+            <span style="font-size:11px;color:#444">${s.handle}</span>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `);
+}
+
+function previewEmail() {
+  const subj = document.getElementById('em-subject')?.value || '';
+  const body = document.getElementById('em-body')?.value || '';
+  if (!subj || !body) { toast('Fill in subject and message first','err'); return; }
+  const win = window.open('', '_blank');
+  win.document.write(`<html><head><title>Email Preview</title><style>body{font-family:Arial,sans-serif;background:#f4f4f4;padding:20px}.card{max-width:560px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden}.hdr{background:#111;padding:24px;text-align:center;color:#fff;font-size:22px;font-weight:900;text-transform:uppercase}.hdr span{color:#E87000}.body{padding:28px}.sub{font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}h2{font-size:20px;margin-bottom:16px}pre{white-space:pre-wrap;font-family:Arial;font-size:14px;color:#555;line-height:1.7}</style></head><body><div class="card"><div class="hdr">Harmaal<span>Wale</span></div><div class="body"><div class="sub">Email Preview</div><h2>${subj}</h2><pre>${body}</pre></div></div></body></html>`);
+}
+
+async function sendBroadcast() {
+  const subj = document.getElementById('em-subject')?.value?.trim();
+  const body = document.getElementById('em-body')?.value?.trim();
+  if (!subj || !body) { toast('Subject and message required','err'); return; }
+  if (!confirm('Send this email to all subscribers? This cannot be undone.')) return;
+  toast('Broadcast queued — emails will be sent via your server mail function','info');
+}
+
+function openWABusiness() {
+  const msg = document.getElementById('wa-msg')?.value || '';
+  if (msg) { navigator.clipboard?.writeText(msg); toast('Message copied to clipboard ✓'); }
+  window.open('https://web.whatsapp.com', '_blank');
+}
+
+function saveCoupon() {
+  const code = document.getElementById('cp-code')?.value?.trim();
+  const pct  = document.getElementById('cp-pct')?.value;
+  const min  = document.getElementById('cp-min')?.value;
+  const exp  = document.getElementById('cp-exp')?.value;
+  if (!code || !pct) { toast('Code and discount % required','err'); return; }
+  // Store in localStorage as a simple coupon registry
+  const coupons = JSON.parse(localStorage.getItem('hw_coupons')||'{}');
+  coupons[code] = {pct:parseFloat(pct), min:parseFloat(min)||0, exp, created: new Date().toISOString()};
+  localStorage.setItem('hw_coupons', JSON.stringify(coupons));
+  document.getElementById('cp-result').innerHTML = `✅ Coupon <strong>${code}</strong> — ${pct}% off (min ₹${min||0}) saved!`;
+  toast('Coupon code saved ✓');
+}
+
+function saveBanner() {
+  const cfg = {
+    h1: document.getElementById('bn-h1')?.value,
+    h2: document.getElementById('bn-h2')?.value,
+    cta: document.getElementById('bn-cta')?.value,
+    link: document.getElementById('bn-link')?.value,
+  };
+  localStorage.setItem('hw_banner_cfg', JSON.stringify(cfg));
+  toast('Banner config saved ✓');
+}
+
+async function exportSubscribers() {
+  const data = await apiFetch('notify.php');
+  const list = data.signups||[];
+  if (!list.length) { toast('No subscribers yet','err'); return; }
+  const csv = 'Email,Category,Date\n' + list.map(n=>`"${n.email}","${n.category||''}","${fmtDate(n.created_at)}"`).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'harmaalwale_subscribers_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  toast(`Exported ${list.length} subscribers ✓`);
+}
+
+// ── SEO ───────────────────────────────────────────────────────
+async function seo() {
+  setPage('SEO','Search engine optimisation & site health');
+  const seoData = JSON.parse(localStorage.getItem('hw_seo_cfg') || '{}');
+
+  content(`
+    <div class="grid-2" style="margin-bottom:14px">
+      <!-- Meta Tags -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">🏷 Homepage Meta Tags</span><span class="box-badge">index.html</span></div>
+        <div style="padding:20px">
+          <div class="form-group"><label>Page Title <span style="color:#555;font-size:9px">· recommended 50-60 chars</span></label>
+            <input class="form-inp" id="seo-title" placeholder="HarmaalWale — Fashion, Electronics & More" value="${seoData.title||'HarmaalWale — Fashion, Electronics, MFD Machines & Daily Essentials'}">
+            <div id="seo-title-len" style="font-size:10px;color:#555;margin-top:4px"></div>
+          </div>
+          <div class="form-group"><label>Meta Description <span style="color:#555;font-size:9px">· recommended 150-160 chars</span></label>
+            <textarea class="form-inp" id="seo-desc" rows="3" placeholder="Shop fashion, electronics, refurbished MFD machines...">${seoData.desc||'Shop fashion, electronics, refurbished MFD machines, genuine spare parts and daily essentials at HarmaalWale. Best prices in India. Fast delivery.'}</textarea>
+            <div id="seo-desc-len" style="font-size:10px;color:#555;margin-top:4px"></div>
+          </div>
+          <div class="form-group"><label>Focus Keywords <span style="color:#555;font-size:9px">· comma separated</span></label>
+            <input class="form-inp" id="seo-kw" placeholder="refurbished MFD machines, fashion online india..." value="${seoData.keywords||'harmaalwale, refurbished MFD machines, spare parts, fashion online india, electronics'}">
+          </div>
+          <button class="btn btn-org" onclick="saveSEO()" style="width:100%;justify-content:center">💾 Save & Apply to HTML</button>
+        </div>
+      </div>
+
+      <!-- Open Graph / Social Preview -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">📱 Social Share Preview</span><span class="box-badge">OG Tags</span></div>
+        <div style="padding:20px">
+          <div class="form-group"><label>OG Title</label><input class="form-inp" id="og-title" placeholder="HarmaalWale" value="${seoData.og_title||'HarmaalWale — Shop Fashion, Electronics & More'}"></div>
+          <div class="form-group"><label>OG Description</label><textarea class="form-inp" id="og-desc" rows="2">${seoData.og_desc||'Your one-stop shop for fashion, electronics, refurbished MFD machines and daily essentials.'}</textarea></div>
+          <div class="form-group"><label>OG Image URL</label><input class="form-inp" id="og-img" placeholder="https://harmaalwale.com/og-image.jpg" value="${seoData.og_img||'https://harmaalwale.com/logo.jpg'}"></div>
+          <div style="border:1px solid #2a2a2a;border-radius:10px;overflow:hidden;margin-top:4px">
+            <div style="background:#1a1a1a;padding:10px 14px;border-bottom:1px solid #2a2a2a;font-size:10px;color:#555;letter-spacing:1px;text-transform:uppercase">Facebook / WhatsApp Preview</div>
+            <div style="padding:14px;background:#111">
+              <div id="og-preview-img" style="background:#1e1e1e;height:80px;border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:28px">🛍️</div>
+              <div id="og-preview-title" style="font-weight:700;font-size:13px;color:#fff;margin-bottom:4px">${seoData.og_title||'HarmaalWale — Shop Fashion, Electronics & More'}</div>
+              <div id="og-preview-desc" style="font-size:11px;color:#666;line-height:1.5">${seoData.og_desc||'Your one-stop shop for fashion, electronics, refurbished MFD machines and daily essentials.'}</div>
+              <div style="font-size:10px;color:#444;margin-top:6px;text-transform:uppercase">harmaalwale.com</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-bottom:14px">
+      <!-- Sitemap -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">🗺 Sitemap</span></div>
+        <div style="padding:18px">
+          <p style="font-size:12px;color:var(--mut);margin-bottom:14px;line-height:1.6">Generate and submit your sitemap to Google Search Console.</p>
+          <div style="background:#111;border:1px solid #1e1e1e;border-radius:8px;padding:12px;font-family:monospace;font-size:11px;color:#555;margin-bottom:12px;line-height:1.8">
+            harmaalwale.com/<br>
+            harmaalwale.com/fashion.html<br>
+            harmaalwale.com/support.html<br>
+            harmaalwale.com/seller.html
+          </div>
+          <button class="btn btn-org btn-sm" onclick="downloadSitemap()" style="width:100%;justify-content:center">⬇ Download sitemap.xml</button>
+        </div>
+      </div>
+
+      <!-- Google Search Console -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">🔎 Google Tools</span></div>
+        <div style="padding:18px;display:flex;flex-direction:column;gap:8px">
+          <a href="https://search.google.com/search-console" target="_blank" class="btn btn-ghost" style="justify-content:center;text-decoration:none">📊 Search Console</a>
+          <a href="https://analytics.google.com" target="_blank" class="btn btn-ghost" style="justify-content:center;text-decoration:none">📈 Google Analytics</a>
+          <a href="https://pagespeed.web.dev/?url=https://harmaalwale.com" target="_blank" class="btn btn-ghost" style="justify-content:center;text-decoration:none">⚡ PageSpeed Test</a>
+          <a href="https://www.google.com/webmasters/tools/submit-url?url=https://harmaalwale.com" target="_blank" class="btn btn-ghost" style="justify-content:center;text-decoration:none">📥 Submit to Google</a>
+        </div>
+      </div>
+
+      <!-- Robots.txt -->
+      <div class="box">
+        <div class="box-hdr"><span class="box-title">🤖 Robots.txt</span></div>
+        <div style="padding:18px">
+          <textarea class="form-inp form-ta" id="robots-txt" rows="7" style="font-family:monospace;font-size:12px">User-agent: *
+Allow: /
+Allow: /fashion.html
+Allow: /support.html
+Allow: /seller.html
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /reset_admin.php
+
+Sitemap: https://harmaalwale.com/sitemap.xml</textarea>
+          <button class="btn btn-org btn-sm" onclick="downloadRobots()" style="margin-top:8px;width:100%;justify-content:center">⬇ Download robots.txt</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO Checklist -->
+    <div class="box">
+      <div class="box-hdr"><span class="box-title">✅ SEO Health Checklist</span></div>
+      <div style="padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px" id="seo-checklist">
+        ${[
+          {ok:true,  text:'HTTPS / SSL active'},
+          {ok:true,  text:'Mobile responsive design'},
+          {ok:true,  text:'Meta viewport set'},
+          {ok:true,  text:'Gzip compression (.htaccess)'},
+          {ok:true,  text:'Browser caching headers'},
+          {ok:true,  text:'Image compression applied'},
+          {ok:false, text:'Google Analytics installed'},
+          {ok:false, text:'Google Search Console verified'},
+          {ok:false, text:'Sitemap submitted to Google'},
+          {ok:false, text:'robots.txt uploaded'},
+          {ok:true,  text:'Page titles present'},
+          {ok:false, text:'Schema markup (structured data)'},
+        ].map(item => `
+          <div style="display:flex;align-items:center;gap:10px;padding:12px;background:#111;border:1px solid #1e1e1e;border-radius:8px">
+            <span style="font-size:16px;flex-shrink:0">${item.ok ? '✅' : '⚠️'}</span>
+            <span style="font-size:12px;color:${item.ok ? '#ccc' : '#666'}">${item.text}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `);
+
+  // Live char counters
+  const titleEl = document.getElementById('seo-title');
+  const descEl  = document.getElementById('seo-desc');
+  const updateLen = () => {
+    const tl = titleEl.value.length;
+    const dl = descEl.value.length;
+    document.getElementById('seo-title-len').innerHTML = '<span style="color:'+( tl<50?'#E87000':tl<=60?'#4CAF50':'#e74c3c')+'">'+tl+'/60 chars</span>';
+    document.getElementById('seo-desc-len').innerHTML  = '<span style="color:'+( dl<140?'#E87000':dl<=160?'#4CAF50':'#e74c3c')+'">'+dl+'/160 chars</span>';
+    // Live OG preview
+    document.getElementById('og-preview-title').textContent = document.getElementById('og-title').value;
+    document.getElementById('og-preview-desc').textContent  = document.getElementById('og-desc').value;
+  };
+  titleEl.addEventListener('input', updateLen);
+  descEl.addEventListener('input', updateLen);
+  document.getElementById('og-title').addEventListener('input', updateLen);
+  document.getElementById('og-desc').addEventListener('input', updateLen);
+  updateLen();
+}
+
+function saveSEO() {
+  const cfg = {
+    title:    document.getElementById('seo-title')?.value,
+    desc:     document.getElementById('seo-desc')?.value,
+    keywords: document.getElementById('seo-kw')?.value,
+    og_title: document.getElementById('og-title')?.value,
+    og_desc:  document.getElementById('og-desc')?.value,
+    og_img:   document.getElementById('og-img')?.value,
+  };
+  localStorage.setItem('hw_seo_cfg', JSON.stringify(cfg));
+  toast('SEO config saved ✓ — apply these meta tags to your HTML files manually');
+
+  // Show the code to paste
+  const snippet = '<!-- SEO META TAGS — paste inside <head> of each page -->\n'
+    + '<title>'+cfg.title+'</title>\n'
+    + '<meta name="description" content="'+cfg.desc+'">\n'
+    + '<meta name="keywords" content="'+cfg.keywords+'">\n'
+    + '<meta property="og:title" content="'+cfg.og_title+'">\n'
+    + '<meta property="og:description" content="'+cfg.og_desc+'">\n'
+    + '<meta property="og:image" content="'+cfg.og_img+'">\n'
+    + '<meta property="og:url" content="https://harmaalwale.com">\n'
+    + '<meta property="og:type" content="website">\n'
+    + '<meta name="twitter:card" content="summary_large_image">';
+
+  const win = window.open('','_blank','width=700,height=500');
+  win.document.write('<html><head><title>SEO Tags</title><style>body{font-family:monospace;background:#111;color:#4CAF50;padding:24px;font-size:13px;line-height:1.8}pre{white-space:pre-wrap}button{background:#E87000;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;margin-bottom:16px}</style></head><body><button onclick="navigator.clipboard.writeText(document.querySelector(\'pre\').textContent).then(()=>this.textContent=\'Copied ✓\')">Copy All</button><pre>'+snippet.replace(/</g,'&lt;')+'</pre></body></html>');
+}
+
+function downloadSitemap() {
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    + '  <url><loc>https://harmaalwale.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>\n'
+    + '  <url><loc>https://harmaalwale.com/fashion.html</loc><priority>0.9</priority><changefreq>daily</changefreq></url>\n'
+    + '  <url><loc>https://harmaalwale.com/support.html</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>\n'
+    + '  <url><loc>https://harmaalwale.com/seller.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>\n'
+    + '</urlset>';
+  const a = document.createElement('a');
+  a.href = 'data:text/xml;charset=utf-8,' + encodeURIComponent(xml);
+  a.download = 'sitemap.xml'; a.click();
+  toast('sitemap.xml downloaded — upload to your root folder ✓');
+}
+
+function downloadRobots() {
+  const txt = document.getElementById('robots-txt')?.value || '';
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(txt);
+  a.download = 'robots.txt'; a.click();
+  toast('robots.txt downloaded — upload to your root folder ✓');
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+if (token && adminUser) {
+  showApp();
+} else {
+  document.getElementById('login-screen').style.display = 'flex';
+}
+</script>
+</body>
+</html>

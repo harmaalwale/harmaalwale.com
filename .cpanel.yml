@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home1/harmakko/public_html/
+    - /bin/cp -rf . $DEPLOYPATH
+    - /bin/rm -rf $DEPLOYPATH/.git $DEPLOYPATH/.github $DEPLOYPATH/deploy.bat $DEPLOYPATH/deploy_hook.php $DEPLOYPATH/deploy_log.php $DEPLOYPATH/.env $DEPLOYPATH/Website.rar

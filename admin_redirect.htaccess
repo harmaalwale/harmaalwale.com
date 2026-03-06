@@ -1,0 +1,5 @@
+# Add this to your main .htaccess OR set up admin subdomain in cPanel
+# To set up admin.harmaalwale.com:
+# 1. cPanel → Subdomains → Create subdomain "admin"
+# 2. Set Document Root to: /home1/harmakko/public_html  
+# 3. OR create separate folder and add redirect

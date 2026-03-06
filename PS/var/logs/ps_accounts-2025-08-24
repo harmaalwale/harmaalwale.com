@@ -1,0 +1,1 @@
+[2025-08-24 03:37:31] ps_accounts.ERROR: PrestaShop\Module\PsAccounts\Repository\ConfigurationRepository::getShopUuidDateUpd: Configuration entry not found: PSX_UUID_V4|grp:|shop: [] []

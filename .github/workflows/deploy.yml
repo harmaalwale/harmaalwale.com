@@ -1,0 +1,31 @@
+name: 🚀 Deploy to harmaalwale.com
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Pull & Deploy via cPanel
+        run: |
+          echo "Step 1: Pulling latest code from GitHub into cPanel..."
+          curl -s -k \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
+            "https://cp-ht-2.webhostbox.net:2083/execute/VersionControl/update?repository_root=/home1/harmakko/repositories/harmaalwale.com"
+          
+          echo "Step 2: Triggering deployment task (cpanel.yml)..."
+          curl -s -k \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
+            "https://cp-ht-2.webhostbox.net:2083/execute/VersionControlDeployment/create?repository_root=/home1/harmakko/repositories/harmaalwale.com"
+          
+          echo "Step 3: Waiting for deployment to complete..."
+          sleep 10
+          
+          echo "Step 4: Checking deployment status..."
+          curl -s -k \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USER }}:${{ secrets.CPANEL_TOKEN }}" \
+            "https://cp-ht-2.webhostbox.net:2083/execute/VersionControlDeployment/retrieve?repository_root=/home1/harmakko/repositories/harmaalwale.com"
+          
+          echo "✅ Done!"

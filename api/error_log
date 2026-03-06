@@ -1,0 +1,30 @@
+[24-Feb-2026 23:20:25 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'verify_token' in 'field list' in /home1/harmakko/public_html/api/auth.php:123
+Stack trace:
+#0 /home1/harmakko/public_html/api/auth.php(123): mysqli->prepare('INSERT INTO use...')
+#1 {main}
+  thrown in /home1/harmakko/public_html/api/auth.php on line 123
+[24-Feb-2026 23:26:41 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'verify_token' in 'field list' in /home1/harmakko/public_html/api/auth.php:123
+Stack trace:
+#0 /home1/harmakko/public_html/api/auth.php(123): mysqli->prepare('INSERT INTO use...')
+#1 {main}
+  thrown in /home1/harmakko/public_html/api/auth.php on line 123
+[25-Feb-2026 05:10:20 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'verify_token' in 'field list' in /home1/harmakko/public_html/api/auth.php:123
+Stack trace:
+#0 /home1/harmakko/public_html/api/auth.php(123): mysqli->prepare('INSERT INTO use...')
+#1 {main}
+  thrown in /home1/harmakko/public_html/api/auth.php on line 123
+[25-Feb-2026 12:43:19 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'verify_token' in 'field list' in /home1/harmakko/public_html/api/auth.php:123
+Stack trace:
+#0 /home1/harmakko/public_html/api/auth.php(123): mysqli->prepare('INSERT INTO use...')
+#1 {main}
+  thrown in /home1/harmakko/public_html/api/auth.php on line 123
+[25-Feb-2026 12:47:45 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IF NOT EXISTS verify_token VARCHAR(100) NULL' at line 1 in /home1/harmakko/public_html/api/auth.php:87
+Stack trace:
+#0 /home1/harmakko/public_html/api/auth.php(87): mysqli->query('ALTER TABLE use...')
+#1 {main}
+  thrown in /home1/harmakko/public_html/api/auth.php on line 87
+[25-Feb-2026 19:33:09 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IF NOT EXISTS verify_token VARCHAR(100) NULL' at line 1 in /home1/harmakko/public_html/api/auth.php:88
+Stack trace:
+#0 /home1/harmakko/public_html/api/auth.php(88): mysqli->query('ALTER TABLE use...')
+#1 {main}
+  thrown in /home1/harmakko/public_html/api/auth.php on line 88
