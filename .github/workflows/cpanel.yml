@@ -1,7 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home1/harmakko/public_html/
-    - /bin/cp -rf . $DEPLOYPATH
-    - /bin/rm -rf $DEPLOYPATH/.git $DEPLOYPATH/.github $DEPLOYPATH/deploy.bat $DEPLOYPATH/.env $DEPLOYPATH/Website.rar
-    - echo "Deployed at $(date)"
